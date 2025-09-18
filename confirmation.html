@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE PROJECT - Access Granted</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --background-color: #0d0d1a;
+            --text-color: #e0e0e0;
+            --accent-color: #ff00ff; /* Neon Magenta for SVG */
+            --secondary-color: #00ffff; /* Neon Cyan for Logo */
+            --terminal-green: #00ff00;
+            --terminal-green-bright: #aaffaa;
+            --dark-accent: #1a1a33;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'VT323', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.1) 51%
+            );
+            background-size: 100% 4px;
+            animation: scan 15s linear infinite;
+        }
+
+        @keyframes scan {
+            from { background-position-y: 0; }
+            to { background-position-y: 100vh; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--secondary-color), 0 0 15px var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .atomic-symbol-svg {
+            width: 1em;
+            height: 1em;
+            margin: 0 0.05em;
+            filter: drop-shadow(0 0 3px var(--accent-color)) drop-shadow(0 0 8px rgba(255, 0, 255, 0.7));
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        .atomic-symbol-svg .nucleus {
+            fill: var(--accent-color);
+        }
+
+        .atomic-symbol-svg .orbit {
+            fill: none;
+            stroke: var(--accent-color);
+            stroke-width: 5;
+        }
+        
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.6; }
+        }
+        
+        .hero {
+            margin-bottom: 2.5rem;
+        }
+
+        .headline {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .glitch {
+            position: relative;
+            color: var(--text-color);
+            text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.025em -0.05em 0 rgba(0,255,0,0.75), 0.025em 0.05em 0 rgba(0,0,255,0.75);
+            animation: glitch-anim 1s infinite linear alternate-reverse;
+        }
+
+        .glitch:before,
+        .glitch:after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-color);
+            overflow: hidden;
+        }
+
+        .glitch:before { left: 2px; text-shadow: -1px 0 var(--accent-color); animation: glitch-anim-2 1.5s infinite linear alternate-reverse; }
+        .glitch:after { left: -2px; text-shadow: -1px 0 var(--secondary-color); animation: glitch-anim-3 2s infinite linear alternate-reverse; }
+        @keyframes glitch-anim { 0% { clip: rect(42px, 9999px, 44px, 0); } 100% { clip: rect(21px, 9999px, 84px, 0); } }
+        @keyframes glitch-anim-2 { 0% { clip: rect(15px, 9999px, 99px, 0); } 100% { clip: rect(100px, 9999px, 9px, 0); } }
+        @keyframes glitch-anim-3 { 0% { clip: rect(59px, 9999px, 16px, 0); } 100% { clip: rect(6px, 9999px, 74px, 0); } }
+
+        .subheadline {
+            font-size: 1.25rem;
+            color: var(--terminal-green);
+            text-shadow: 0 0 5px var(--terminal-green);
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 2.5rem; 
+            line-height: 1.5;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--terminal-green);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .terminal-box {
+            background-color: var(--dark-accent);
+            border: 2px solid var(--terminal-green);
+            box-shadow: 0 0 10px var(--terminal-green), inset 0 0 10px var(--terminal-green);
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .terminal-header {
+            background-color: #0c1c0c;
+            padding: 0.5rem 1rem;
+            border-bottom: 2px solid var(--terminal-green);
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-title {
+            font-family: 'VT323', monospace;
+            color: var(--terminal-green-bright);
+        }
+
+        .terminal-status {
+            color: var(--terminal-green);
+            animation: flicker 2s infinite;
+        }
+        
+        .terminal-content {
+            padding: 1.5rem;
+            color: var(--terminal-green);
+            text-shadow: 0 0 3px var(--terminal-green);
+        }
+        
+        .terminal-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .terminal-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .terminal-content li {
+            margin-bottom: 1.25rem;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .terminal-content li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--terminal-green);
+            font-weight: bold;
+        }
+
+        .terminal-content li strong {
+            color: var(--terminal-green-bright);
+            text-shadow: 0 0 5px var(--terminal-green);
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1.1em;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--terminal-green);
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 10px var(--terminal-green);
+            color: #88ff88;
+        }
+
+        .return-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .return-link:hover {
+            color: #88ffff;
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">
+                THE PR
+                <svg class="atomic-symbol-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="nucleus" cx="50" cy="50" r="8"/>
+                    <ellipse class="orbit" cx="50" cy="50" rx="45" ry="18"/>
+                    <ellipse class="orbit" cx="50" cy="50" rx="45" ry="18" transform="rotate(60 50 50)"/>
+                    <ellipse class="orbit" cx="50" cy="50" rx="45" ry="18" transform="rotate(120 50 50)"/>
+                </svg>
+                JECT
+            </h1>
+        </header>
+        <main class="main-content">
+            <section class="hero">
+                <h2 class="headline glitch" data-text="ACCESS GRANTED">
+                    ACCESS GRANTED
+                </h2>
+                <p id="subheadline-text" class="subheadline"></p>
+            </section>
+            <section class="story-section">
+                <div class="terminal-box">
+                    <div class="terminal-header">
+                        <span class="terminal-title">C:\> NEXT_MISSION.TXT</span>
+                        <span class="terminal-status">TRANSMISSION COMPLETE</span>
+                    </div>
+                    <div class="terminal-content">
+                        <p>Your enlistment is confirmed. Welcome to the investigation.</p>
+                        <p>Your next steps are critical:</p>
+                        <ul>
+                            <li><strong>CHECK YOUR INBOX:</strong> A confirmation email is en route to your provided coordinates.</li>
+                            <li><strong>WHITELIST ADDRESS:</strong> Add my email to your contacts to ensure classified files are not lost in the static.</li>
+                            <li><strong>FOLLOW FOR UPDATES:</strong> The situation is evolving. Monitor these channels for new intel.</li>
+                        </ul>
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/lily_rosslyn/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://youtube.com/@LilyRosslyn" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.patreon.com/c/LilyRosslyn" target="_blank" rel="noopener noreferrer" aria-label="Patreon"><i class="fab fa-patreon"></i></a>
+                        </div>
+                        <div class="text-center">
+                            <a href="index.html" class="return-link">C:\> RETURN TO MAIN SITE</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const subheadlineElement = document.getElementById('subheadline-text');
+            const textToType = "Welcome, recruit. Your enlistment is confirmed.";
+            let charIndex = 0;
+
+            function typeWriter() {
+                if (charIndex < textToType.length) {
+                    subheadlineElement.innerHTML = textToType.substring(0, charIndex + 1) + '<span class="cursor"></span>';
+                    charIndex++;
+                    setTimeout(typeWriter, 50);
+                } else {
+                     subheadlineElement.innerHTML = textToType + '<span class="cursor"></span>';
+                }
+            }
+            
+            typeWriter();
+        });
+    </script>
+</body>
+</html>
+
