@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Project | Lily Rosslyn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=VT323&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b0764;
+            --secondary: #7e22ce;
+            --accent: #c026d3;
+            --light: #f5f3ff;
+            --dark: #1e1b4b;
+            --neon: #d946ef;
+            --neon-blue: #00ffff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #bf00ff;
+            --retro-black: #0f0f1a;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            color: var(--light);
+            background-color: var(--retro-black);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .retro-text {
+            font-family: 'VT323', monospace;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--neon);
+            transition: width 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+            box-shadow: 0 0 8px var(--neon), 0 0 12px var(--neon);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--secondary);
+        }
+        
+        .btn-neon {
+            background-color: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+            box-shadow: 0 0 5px var(--neon-blue), inset 0 0 5px var(--neon-blue);
+            transition: all 0.3s ease;
+            font-family: 'VT323', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .btn-neon:hover {
+            background-color: var(--neon-blue);
+            color: var(--retro-black);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px var(--neon-blue);
+        }
+        
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(30, 27, 75, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(126, 34, 206, 0.3);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(192, 38, 211, 0.5);
+        }
+        
+        .social-icon {
+            transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: var(--neon);
+            text-shadow: 0 0 10px var(--neon);
+        }
+        
+        /* 80s Grid Background */
+        .grid-bg {
+            background-color: var(--retro-black);
+            background-image: 
+                linear-gradient(rgba(191, 0, 255, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(191, 0, 255, 0.2) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .grid-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at center, transparent 0%, var(--retro-black) 70%);
+            z-index: 1;
+        }
+        
+        /* Retro Sun */
+        .retro-sun {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, 
+                rgba(255, 0, 128, 0.7) 0%, 
+                rgba(255, 102, 0, 0.5) 20%, 
+                rgba(255, 204, 0, 0.3) 40%, 
+                transparent 80%);
+            border-radius: 50% 50% 0 0;
+            z-index: 0;
+        }
+        
+        /* VHS Scanlines */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.03) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 100% 4px;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        
+        /* Glowing elements */
+        .glow-text {
+            text-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon);
+        }
+        
+        .glow-text-blue {
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+            color: var(--neon-blue);
+        }
+        
+        .glow-text-pink {
+            text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+            color: var(--neon-pink);
+        }
+        
+        .glow-border {
+            box-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon);
+        }
+        
+        /* Retro Computer Terminal */
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            padding: 20px;
+            font-family: 'VT323', monospace;
+            color: var(--neon-blue);
+            position: relative;
+        }
+        
+        .terminal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background: linear-gradient(to bottom, var(--neon-blue) 0%, transparent 100%);
+            opacity: 0.2;
+        }
+        
+        .terminal-header {
+            border-bottom: 1px solid var(--neon-blue);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--neon-pink);
+            box-shadow: 0 0 5px var(--neon-pink);
+        }
+        
+        .terminal-button:nth-child(2) {
+            background-color: var(--neon-blue);
+            box-shadow: 0 0 5px var(--neon-blue);
+        }
+        
+        .terminal-button:nth-child(3) {
+            background-color: var(--neon-purple);
+            box-shadow: 0 0 5px var(--neon-purple);
+        }
+        
+        .terminal-content {
+            line-height: 1.5;
+            letter-spacing: 1px;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: var(--neon-blue);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Character Cards */
+        .character-card {
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 15px var(--neon-purple);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px var(--neon-purple);
+        }
+        
+        .character-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center top;
+            border-bottom: 2px solid var(--neon-purple);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--neon-purple) 0%, transparent 100%);
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .character-icon {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 80s Tech Icons */
+        .tech-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(30, 27, 75, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon); }
+            50% { text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon), 0 0 30px var(--neon); }
+            100% { text-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon); }
+        }
+        
+        @keyframes glowPulseBlue {
+            0% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
+            50% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue); }
+            100% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
+        }
+        
+        @keyframes glowPulsePink {
+            0% { text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); }
+            50% { text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 30px var(--neon-pink); }
+            100% { text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .animate-glow {
+            animation: glowPulse 2s infinite;
+        }
+        
+        .animate-glow-blue {
+            animation: glowPulseBlue 2s infinite;
+        }
+        
+        .animate-glow-pink {
+            animation: glowPulsePink 2s infinite;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        
+        /* Book display */
+        .book-display {
+            perspective: 1000px;
+        }
+        
+        .book-container {
+            transform-style: preserve-3d;
+            transform: rotateY(-15deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .book-container:hover {
+            transform: rotateY(0);
+        }
+        
+        .book-cover {
+            box-shadow: 0 0 20px rgba(192, 38, 211, 0.7);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f0f1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+        
+        /* VHS Tape Design */
+        .vhs-tape {
+            background-color: #111;
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink);
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .vhs-tape:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px var(--neon-pink);
+        }
+        
+        .vhs-label {
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            transform: rotate(-2deg);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .vhs-label::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px dashed #999;
+            z-index: 1;
+        }
+        
+        .vhs-title {
+            font-family: 'VT323', monospace;
+            color: #111;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .vhs-subtitle {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .vhs-reels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .vhs-reel {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #333;
+            position: relative;
+        }
+        
+        .vhs-reel::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background-color: #333;
+            border-radius: 50%;
+        }
+        
+        /* Retro TV Frame */
+        .retro-tv {
+            background-color: #222;
+            border-radius: 10px;
+            padding: 20px;
+            border: 15px solid #111;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+        
+        .retro-tv::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 15px;
+            background-color: #111;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .retro-tv::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            right: 10%;
+            height: 10px;
+            background-color: #111;
+            border-radius: 0 0 50% 50%;
+        }
+        
+        .tv-screen {
+            background-color: #000;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .tv-static {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        
+        .tv-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .tv-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .tv-knob {
+            width: 20px;
+            height: 20px;
+            background-color: #555;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+        
+        /* Cassette Tape */
+        .cassette {
+            width: 300px;
+            height: 180px;
+            background-color: #222;
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .cassette:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(192, 38, 211, 0.7);
+        }
+        
+        .cassette-inner {
+            background-color: #444;
+            height: 100%;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        
+        .cassette-label {
+            background-color: white;
+            height: 40%;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'VT323', monospace;
+            color: black;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .cassette-reels {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        
+        .cassette-reel {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #222;
+            background-color: #333;
+            position: relative;
+        }
+        
+        .cassette-reel::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background-color: #222;
+            border-radius: 50%;
+        }
+        
+        .cassette-windows {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .cassette-window {
+            width: 80px;
+            height: 30px;
+            background-color: #111;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cassette-tape {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background-color: #333;
+            border-radius: 2px;
+        }
+        
+        /* Character gradients */
+        .robbie-gradient {
+            background: linear-gradient(135deg, #3b0764 0%, #7e22ce 100%);
+        }
+        
+        .shelby-gradient {
+            background: linear-gradient(135deg, #831843 0%, #be185d 100%);
+        }
+        
+        .cassie-gradient {
+            background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%);
+        }
+        
+        .ben-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Scanlines Effect -->
+    <div class="scanlines"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full bg-opacity-80 bg-gray-900 backdrop-blur-md shadow-lg z-50 py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-3">
+                <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/fb781345-55f1-4065-b6aa-ecae0bbb8169_rwc_0x0x280x280x4096.png?h=e9020f74f2cc9f28c84e59d74e68e957" alt="Lily Rosslyn Logo" class="h-10 w-10">
+                <span class="text-2xl font-bold text-white">Lily Rosslyn</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link text-gray-300 hover:text-white">Overview</a>
+                <a href="#characters" class="nav-link text-gray-300 hover:text-white">Characters</a>
+                <a href="#setting" class="nav-link text-gray-300 hover:text-white">1986 Setting</a>
+                <a href="#excerpts" class="nav-link text-gray-300 hover:text-white">Excerpts</a>
+                <a href="#arc" class="nav-link text-gray-300 hover:text-white">ARC Reader</a>
+                <a href="index.html" class="nav-link text-gray-300 hover:text-white">Main Site</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        
+    </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-gray-900 bg-opacity-95 backdrop-blur-lg z-40 md:hidden">
+            <div class="container mx-auto px-4 py-6 flex flex-col space-y-6 pt-20">
+                <a href="#overview" class="text-xl text-gray-300 hover:text-white py-2">Overview</a>
+                <a href="#characters" class="text-xl text-gray-300 hover:text-white py-2">Characters</a>
+                <a href="#setting" class="text-xl text-gray-300 hover:text-white py-2">1986 Setting</a>
+                <a href="#excerpts" class="text-xl text-gray-300 hover:text-white py-2">Excerpts</a>
+                <a href="#arc" class="text-xl text-gray-300 hover:text-white py-2">ARC Reader</a>
+                <a href="index.html" class="text-xl text-gray-300 hover:text-white py-2">Main Site</a>
+            </div>
+        </div>
+
+    <!-- Hero Section -->
+    <section class="grid-bg min-h-screen flex items-center justify-center text-white relative overflow-hidden pt-20">
+        <!-- Retro Sun -->
+        <div class="retro-sun"></div>
+        
+        <div class="container mx-auto px-4 text-center relative z-10 py-20">
+            <div class="mb-8 opacity-0 animate-fade-in">
+                <h1 class="text-6xl md:text-8xl font-bold mb-4 glow-text-blue animate-glow-blue">THE PROJECT</h1>
+                <p class="text-xl md:text-2xl retro-text glow-text-pink animate-glow-pink">A SUPERNATURAL THRILLER BY LILY ROSSLYN</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto mb-12 opacity-0 animate-fade-in delay-200">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="retro-text">SYSTEM.EXE</span>
+                        <div class="terminal-buttons">
+                            <div class="terminal-button"></div>
+                            <div class="terminal-button"></div>
+                            <div class="terminal-button"></div>
+                        </div>
+                    </div>
+                    <div class="terminal-content">
+                        <p>> LOADING VIRTUAL REALITY SIMULATION...</p>
+                        <p>> WARNING: UNAUTHORIZED ACCESS DETECTED</p>
+                        <p>> DIMENSIONAL BREACH IMMINENT</p>
+                        <p>> SYSTEM FAILURE: GATEWAY OPENING</p>
+                        <p>> RUN WHILE YOU STILL CAN<span class="cursor"></span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-6 opacity-0 animate-fade-in delay-300">
+                <a href="#overview" class="btn-neon px-8 py-3 rounded-full text-lg font-medium uppercase tracking-wider">Enter The Project</a>
+                <a href="#arc" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Become an ARC Reader</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center glow-text-blue animate-glow-blue">
+                The Story
+            </h2>
+            
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div class="lg:w-1/2 order-2 lg:order-1">
+                    <div class="card p-8 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-6 text-purple-300">A Gateway to Darkness</h3>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            It's 1986, and virtual reality is emerging as the tech of the future. When high schooler Robbie stumbles upon a VR exhibit at the local mall, he gets an idea for the upcoming school science fair - what if he and his friends could build their own virtual world?
+                        </p>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            Robbie pulls together a ragtag crew of fellow classmates for the ambitious project, each contributing their own skills.
+                        </p>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            Together, the unlikely team constructs a rudimentary VR simulation that exceeds their wildest expectations. But their excitement turns to terror when a cryptic glitch reveals their invention has also opened a gateway to sinister alternate dimensions hidden beneath reality.
+                        </p>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            As demonic creatures begin to creep into their world, Robbie realizes they've unleashed powers far beyond their control. An ominous corporation seeks to exploit the weakened boundaries between worlds for profit and power.
+                        </p>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            With time running out, Robbie's crew must venture into the creeping darkness themselves to undo the damage. Friendships are tested and relationships strained to the breaking point as they race to overcome their greatest challenge yet. Can they repair the fraying fabric of reality before all is consumed by the gathering shadows?
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 order-1 lg:order-2">
+                    <div class="retro-tv">
+                        <div class="tv-screen">
+                            <div class="tv-static"></div>
+                            <div class="tv-content">
+                                <div class="book-display flex justify-center">
+                                    <div class="book-container">
+                                        <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/a5ee9a7f-808f-4cd7-a522-a0fe1b6d06cf_rw_1920.jpg?h=e12efcb6c0d14eb797eb03d76d33621f" alt="The Project Book Cover" class="book-cover rounded-lg max-w-full h-auto shadow-2xl" style="max-height: 500px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tv-controls">
+                            <div class="tv-knob"></div>
+                            <div class="tv-knob"></div>
+                            <div class="tv-knob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 flex justify-center">
+                <a href="https://www.youtube.com/watch?v=0q-Zd-MH-NY" target="_blank" class="btn-neon px-8 py-3 rounded-full text-lg font-medium uppercase tracking-wider flex items-center gap-2">
+                    <i class="fas fa-play-circle"></i> Watch Book Trailer
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dive Deeper Section -->
+    <section id="dive-deeper" class="py-20 bg-gray-900 bg-opacity-30">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center glow-text animate-glow">Dive Deeper</h2>
+            <div class="flex flex-col md:flex-row gap-8 justify-center">
+                <!-- VHS Tape -->
+                <div class="md:w-1/2 lg:w-1/3">
+                    <a href="https://lilyrosslyn.notion.site/The-Project-f8b5b7f5c81b4b0fb7bb4c9e3c1cab3c" target="_blank" class="block">
+                        <div class="vhs-tape rounded-lg">
+                            <div class="vhs-label">
+                                <div class="vhs-title">THE PROJECT</div>
+                                <div class="vhs-subtitle">FULL SYNOPSIS - 1986</div>
+                            </div>
+                            <div class="vhs-reels">
+                                <div class="vhs-reel"></div>
+                                <div class="vhs-reel"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Cassette Tape -->
+                <div class="md:w-1/2 lg:w-1/3">
+                    <a href="https://lilyrosslyn.notion.site/The-Project-OST-1f6cb41c48d380e2929fdcf47c8bbfad" target="_blank" class="block">
+                        <div class="cassette">
+                            <div class="cassette-inner">
+                                <div class="cassette-windows">
+                                    <div class="cassette-window">
+                                        <div class="cassette-tape"></div>
+                                    </div>
+                                    <div class="cassette-window">
+                                        <div class="cassette-tape"></div>
+                                    </div>
+                                </div>
+                                <div class="cassette-label">
+                                    <div>
+                                        <div class="text-lg font-bold">THE PROJECT</div>
+                                        <div class="text-sm">SOUNDTRACK</div>
+                                    </div>
+                                </div>
+                                <div class="cassette-reels">
+                                    <div class="cassette-reel"></div>
+                                    <div class="cassette-reel"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Characters Section -->
+    <section id="characters" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center glow-text-pink animate-glow-pink">Meet The Characters</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Robbie -->
+                <div class="character-card rounded-lg overflow-hidden">
+                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3A11570c2d-d640-4790-b549-586b6de36c36%3Atmphbaazqlz_1.jpg?table=block&id=1f6cb41c-48d3-8051-8ddf-f5257e6f5d53&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Robbie Kingsley</h3>
+                        <p class="text-gray-300 mb-4">Behind his quiet determination lies a brilliant mind shadowed by the ghosts of past failures. As he leads the team in their ambitious VR project, Robbie must confront his deepest fears while fighting to prove that one mistake doesn't define a destiny. But will his desperate drive for redemption blind him to the dangers that lie ahead?</p>
+                        <div class="flex items-center text-sm text-gray-400">
+                            <span class="mr-3"><i class="fas fa-brain mr-1"></i> Tech Genius</span>
+                            <span><i class="fas fa-users mr-1"></i> Leader</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cassie -->
+                <div class="character-card rounded-lg overflow-hidden">
+                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3Aef6b9779-aa2f-48af-8498-4d8f297d7708%3Atmpfq1ok2hi.jpg?table=block&id=1f6cb41c-48d3-8046-a2ba-e3278098b937&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center 30%;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Cassie Simmons</h3>
+                        <p class="text-gray-300 mb-4">Queen bee by day, scientific prodigy by night. Cassie masterfully juggles two worlds - ruling the school hallways while harboring a brilliant mind for physics that could change everything. As the walls between her double life begin to crack, she'll have to decide which version of herself she truly wants to be.</p>
+                        <div class="flex items-center text-sm text-gray-400">
+                            <span class="mr-3"><i class="fas fa-flask mr-1"></i> Physics Genius</span>
+                            <span><i class="fas fa-crown mr-1"></i> Popular</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ben -->
+                <div class="character-card rounded-lg overflow-hidden">
+                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3Ade29d5c0-dd80-421b-b777-8dbf9ae429df%3Atmp9kwiycqv.jpg?table=block&id=1f6cb41c-48d3-8030-ab8d-f81cb45d020d&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Ben Zhang</h3>
+                        <p class="text-gray-300 mb-4">With programming skills that could rival Silicon Valley's finest, Ben navigates between family expectations and technological dreams. His unique perspective on justice becomes vital as the team ventures into morally murky waters - but will his principles survive when everything is at stake?</p>
+                        <div class="flex items-center text-sm text-gray-400">
+                            <span class="mr-3"><i class="fas fa-code mr-1"></i> Programmer</span>
+                            <span><i class="fas fa-balance-scale mr-1"></i> Principled</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Shelby -->
+                <div class="character-card rounded-lg overflow-hidden">
+                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3A2a591539-fc1f-4531-88c6-c1691725e225%3Atmpzxksfvzk.jpg?table=block&id=1f6cb41c-48d3-80b7-9a3c-dc0082fa8baa&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Shelby DiMario</h3>
+                        <p class="text-gray-300 mb-4">Don't let her rebellious exterior fool you - behind the anti-establishment attitude lurks one of the most skilled hackers you'll never see coming. As Shelby's technical prowess becomes crucial to the team's survival, she must reconcile her drive to disrupt the system with her growing power to change it from within.</p>
+                        <div class="flex items-center text-sm text-gray-400">
+                            <span class="mr-3"><i class="fas fa-laptop-code mr-1"></i> Hacker</span>
+                            <span><i class="fas fa-spray-can mr-1"></i> Rebel</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1986 Setting Section -->
+    <section id="setting" class="py-20 bg-gray-900 bg-opacity-30">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center glow-text animate-glow">Welcome to 1986</h2>
+            
+            <div class="card p-8 rounded-lg mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-purple-300">The Dawn of Virtual Reality</h3>
+                <p class="text-lg mb-6 leading-relaxed">
+                    "The Project" takes place in 1986, a pivotal time when virtual reality was just emerging as a concept. The story captures the excitement and wonder of this technological frontier, when the possibilities seemed endless and the dangers unknown.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- 80s Tech Icons -->
+                <div class="flex flex-col items-center">
+                    <div class="tech-icon mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-purple-300">Early Computers</h4>
+                    <p class="text-center text-gray-300">Commodore 64s and early IBM PCs were the cutting edge of home computing</p>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="tech-icon mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-purple-300">VHS Tapes</h4>
+                    <p class="text-center text-gray-300">The primary way to watch movies at home and record television</p>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="tech-icon mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-purple-300">Walkmans</h4>
+                    <p class="text-center text-gray-300">Portable cassette players that revolutionized how people listened to music</p>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="tech-icon mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-purple-300">Arcade Games</h4>
+                    <p class="text-center text-gray-300">The mall arcade was the social hub for teens and gaming enthusiasts</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 card p-8 rounded-lg">
+                <h3 class="text-2xl font-bold mb-6 text-purple-300">Cultural Touchpoints</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-purple-200">Movies & TV</h4>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-1">
+                            <li>Back to the Future</li>
+                            <li>The Goonies</li>
+                            <li>Aliens</li>
+                            <li>Top Gun</li>
+                            <li>Ferris Bueller's Day Off</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-purple-200">Music</h4>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-1">
+                            <li>Madonna</li>
+                            <li>Michael Jackson</li>
+                            <li>Whitney Houston</li>
+                            <li>Bon Jovi</li>
+                            <li>The Cure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Excerpts Section -->
+    <section id="excerpts" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center glow-text-pink animate-glow-pink">Story Excerpts</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Excerpt 1 -->
+                <div class="card p-8 rounded-lg">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Discovery</h3>
+                        <div class="w-16 h-1 bg-purple-500"></div>
+                    </div>
+                    <p class="text-lg mb-4 leading-relaxed italic">
+                        "Before Robbie knew it, he was suddenly plunged into darkness, then a pixilated landscape began taking shape before his eyes. He stood atop a mountain ridge with it's depths receding into the distance. He raised his gloved hands and saw them before him, but they weren't really his hands. The motion was delayed and seemed detached from his body. He took a few tentative steps. Robbie was amazed; he had no idea that this was possible."
+                    </p>
+                </div>
+                
+                <!-- Excerpt 2 -->
+                <div class="card p-8 rounded-lg">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Glitch</h3>
+                        <div class="w-16 h-1 bg-purple-500"></div>
+                    </div>
+                    <p class="text-lg mb-4 leading-relaxed italic">
+                        "As Jay took another step forward, he noticed flashes of images. It was like he was actually at school for a moment. More flashes that looked like snapshots of the school hallway. Jay wasn't aware of any technology that could make a 3D world look this real."
+                    </p>
+                </div>
+                
+                <!-- Excerpt 3 -->
+                <div class="card p-8 rounded-lg">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Warning</h3>
+                        <div class="w-16 h-1 bg-purple-500"></div>
+                    </div>
+                    <p class="text-lg mb-4 leading-relaxed italic">
+                        "As he made his exit through the mesmerized throngs still swarming the platform, an elderly man in an old brown coat appeared before him. 'Enjoy it while you can, son. The rabbit hole will eventually swallow you.' he warned in a gravelly voice but before Robbie could respond, the old man disappeared into the crowd. Robbie felt puzzled and confused. What did that even mean? The strange words were unsettling."
+                    </p>
+                </div>
+                
+                <!-- Excerpt 4 -->
+                <div class="card p-8 rounded-lg">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Confrontation</h3>
+                        <div class="w-16 h-1 bg-purple-500"></div>
+                    </div>
+                    <p class="text-lg mb-4 leading-relaxed italic">
+                        "Ben rolled his eyes before staring him down, 'Really, Robbie? You take one karate lesson and you think you are Chuck Norris?'
+                        <br><br>
+                        'No, Chuck Norris, thinks he's me.' Robbie said, as he and Josie chuckled but they trailed off when they saw movement in the trees ahead of them."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARC Reader Section -->
+    <section id="arc" class="py-20 bg-gray-900 bg-opacity-30">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center glow-text-blue animate-glow-blue">Become an ARC Reader</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="card p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-6 text-purple-300">Read "The Project" Before Anyone Else</h3>
+                    <p class="text-lg mb-6 leading-relaxed">
+                        Want to be among the first to experience this supernatural thriller set in the vibrant world of 1986? Join my Advanced Reader Copy (ARC) team and help shape the final version of "The Project" with your valuable feedback.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-purple-200">As an ARC reader, you'll:</h4>
+                            <ul class="list-disc pl-6 text-gray-300 space-y-3">
+                                <li>Get free advance access to "The Project"</li>
+                                <li>Provide feedback that helps shape the final book</li>
+                                <li>Be acknowledged in the published version</li>
+                                <li>Join a community of like-minded readers</li>
+                                <li>Get insider information about future stories</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-purple-200">What we're looking for:</h4>
+                            <ul class="list-disc pl-6 text-gray-300 space-y-3">
+                                <li>Readers who enjoy supernatural thrillers</li>
+                                <li>Fans of 80s nostalgia and retro tech</li>
+                                <li>People interested in stories that explore faith and the supernatural</li>
+                                <li>Honest feedback to help make the story stronger</li>
+                                <li>Willingness to leave a review when the book launches</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center mt-8">
+                        <a href="https://lilyrosslyn.notion.site/1a9cb41c48d380f28a9fe59af8683d67?pvs=105" target="_blank" class="btn-primary px-8 py-4 rounded-lg text-center text-lg">Apply to be an ARC Reader</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 grid-bg relative">
+        <div class="retro-sun"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-6 glow-text-blue animate-glow-blue">Ready to Enter "The Project"?</h2>
+                <p class="text-xl mb-8">Join Robbie and his friends as they navigate the dangerous intersection of technology, faith, and the supernatural in this thrilling story set in 1986.</p>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <a href="https://lilyrosslyn.notion.site/1a9cb41c48d380f28a9fe59af8683d67?pvs=105" target="_blank" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Become an ARC Reader</a>
+                    <a href="https://www.patreon.com/c/LilyRosslyn" target="_blank" class="btn-secondary px-8 py-3 rounded-full text-lg font-medium">Join Patreon for Early Access</a>
+                    <a href="https://www.youtube.com/watch?v=0q-Zd-MH-NY" target="_blank" class="btn-neon px-8 py-3 rounded-full text-lg font-medium">Watch Book Trailer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent pointer-events-none"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0 flex items-center space-x-4">
+                    <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/fb781345-55f1-4065-b6aa-ecae0bbb8169_rwc_0x0x280x280x4096.png?h=e9020f74f2cc9f28c84e59d74e68e957" alt="Lily Rosslyn Logo" class="h-10 w-10">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-1">Lily Rosslyn</h2>
+                        <p class="text-gray-400">Christian YA Supernatural Author</p>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="https://www.instagram.com/lily_rosslyn/" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@LilyRosslyn" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.patreon.com/c/LilyRosslyn" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-patreon"></i></a>
+                    <a href="https://discord.gg/Czrk9D8f9U" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-discord"></i></a>
+                    <a href="mailto:hello@lilyrosslyn.com" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Lily Rosslyn. All rights reserved.</p>
+                <p class="mt-2"><a href="index.html" class="hover:text-white">Return to Main Site</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+        
+        // Animate elements when they come into view
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('h2:not(.animate-glow):not(.animate-glow-blue):not(.animate-glow-pink), h3, .card, .character-card, .tech-icon, .vhs-tape, .cassette').forEach(element => {
+            if (!element.classList.contains('animate-glow') && 
+                !element.classList.contains('animate-glow-blue') && 
+                !element.classList.contains('animate-glow-pink')) {
+                element.style.opacity = '0';
+                observer.observe(element);
+            }
+        });
+        
+        // Terminal typing effect
+        function typeWriter(element, text, i = 0, speed = 50) {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(() => typeWriter(element, text, i, speed), speed);
+            }
+        }
+        
+        // Simulate typing in terminal on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const terminalLines = document.querySelectorAll('.terminal-content p');
+            let delay = 0;
+            
+            terminalLines.forEach((line, index) => {
+                const text = line.textContent;
+                line.textContent = '';
+                
+                setTimeout(() => {
+                    typeWriter(line, text);
+                }, delay);
+                
+                delay += text.length * 50 + 500; // Adjust timing based on text length
+            });
+        });
+    </script>
+</body>
+</html>
+
