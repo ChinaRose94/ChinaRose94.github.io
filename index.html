@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600&family=Share+Tech+Mono&family=Exo+2:wght@400&family=VT323&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS -->
@@ -29,6 +29,8 @@
         .font-tech-mono { font-family: 'Share Tech Mono', monospace; }
         .font-lora { font-family: 'Lora', serif; }
         .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-exo2 { font-family: 'Exo 2', sans-serif; }
+        .font-vt323 { font-family: 'VT323', monospace; }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 12px; }
@@ -147,11 +149,10 @@
             position: relative;
             width: 90%;
             max-width: 960px;
-            aspect-ratio: 16 / 9;
         }
-        .video-modal video {
+        .video-modal-content iframe {
             width: 100%;
-            height: 100%;
+            aspect-ratio: 16 / 9;
             border-radius: 8px;
             border: 2px solid #be29ec;
         }
@@ -205,6 +206,152 @@
             100% { transform: translateX(120vw) rotate(25deg); opacity: 0; }
         }
 
+        /* --- STYLES FOR EMBEDDED SIGNUP FORM --- */
+        .signup-container {
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+        }
+        .signup-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+        .signup-atomic-symbol {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            position: relative;
+            top: 0.1em;
+            color: #ff00c1;
+            filter: drop-shadow(0 0 5px #ff00c1);
+        }
+        .signup-headline {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.25rem, 5vw, 1.75rem);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .glitch {
+            position: relative;
+            color: #e6edf3;
+            text-shadow: 0 0 2px rgba(230, 237, 243, 0.5);
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0c1f;
+            overflow: hidden;
+        }
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff00c1;
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 #00ffff;
+            animation: glitch-anim-2 2s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 { 0% { clip-path: inset(45% 0 50% 0); } 100% { clip-path: inset(5% 0 80% 0); } }
+        @keyframes glitch-anim-2 { 0% { clip-path: inset(60% 0 30% 0); } 100% { clip-path: inset(90% 0 5% 0); } }
+        .signup-subheadline {
+            min-height: 2.5em;
+            font-family: 'VT323', monospace;
+            font-size: 1.25rem;
+            color: #00ff00;
+            white-space: pre-wrap;
+            margin-bottom: 1.5rem;
+        }
+        .signup-subheadline::after {
+            content: '_';
+            animation: cursor-blink 1s infinite;
+        }
+        .terminal-box {
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.2);
+            padding: 1.5rem 2rem;
+            text-align: left;
+            background-color: #0D1117;
+        }
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #00ff00;
+        }
+        .terminal-title, .terminal-status {
+            font-family: 'VT323', monospace;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            color: #00ff00;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: 'VT323', monospace;
+            font-size: 1.25rem;
+            color: #00ff00;
+        }
+        .form-input {
+            width: 100%;
+            background-color: #000;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            font-size: 1.25rem;
+            padding: 0.75rem;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        .submit-btn {
+            background-color: transparent;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        .submit-btn:hover {
+            background-color: #00ff00;
+            color: #0D1117;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        }
+        .form-message {
+            margin-top: 1rem;
+            font-size: 1rem;
+            height: 1.2rem;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+        }
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
     </style>
 </head>
 <body class="antialiased relative">
@@ -220,7 +367,7 @@
                 <span>Lily Rosslyn</span>
             </a>
             <div class="hidden md:flex space-x-6 font-semibold">
-                <a href="the-project.html" class="transition-colors duration-300">The Project</a>
+                <a href="#the-project" class="transition-colors duration-300">The Project</a>
                 <a href="#blog" class="transition-colors duration-300">Blog</a>
                 <a href="#about-stories" class="transition-colors duration-300">My Stories</a>
                 <a href="#about-me" class="transition-colors duration-300">About</a>
@@ -258,9 +405,7 @@
                         <div class="glass-card p-8 rounded-xl">
                             <h3 class="text-3xl font-orbitron font-semibold mb-4 text-cyan-300">Synopsis</h3>
                             <p class="text-gray-300 text-justify">It's 1986. When high schooler Robbie gets a glimpse of a revolutionary VR demo, he recruits a ragtag crew of misfits for an ambitious science fair project: to build their own virtual world. Their creation exceeds their wildest dreams, but a glitch reveals a terrifying truth—their device has unlocked a gateway to a sinister alternate dimension. As demonic creatures bleed into their reality and an ominous corporation seeks to exploit their discovery, the friends must venture into the darkness they unleashed to fix the fraying fabric of reality before it's consumed by shadows.</p>
-                             <a href="the-project.html" class="mt-6 inline-block btn-custom text-white font-bold py-2 px-6 rounded-lg uppercase tracking-wider">
-                                Explore the World of The Project <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
+                             <a href="the-project.html" target="_blank" class="mt-6 inline-block btn-custom text-white font-bold py-2 px-6 rounded-lg text-sm uppercase tracking-wider">Explore the World of The Project</a>
                         </div>
                          <div class="glass-card p-8 rounded-xl">
                             <h3 class="text-3xl font-orbitron font-semibold mb-4 text-cyan-300">First Look Trailer</h3>
@@ -350,24 +495,39 @@
         </section>
 
 
-        <!-- Connect Section -->
+        <!-- Connect Section with Embedded Form -->
         <section id="connect" class="py-20 md:py-32 px-4 bg-black bg-opacity-20">
-            <div class="container mx-auto text-center fade-in-section">
-                <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-8 neon-text-violet">Join The Project</h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-10">Become part of the story. Follow for updates, behind-the-scenes content, and be the first to know when "The Project" goes live.</p>
-                <div class="flex justify-center space-x-6">
-                    <a href="https://www.instagram.com/lily_rosslyn/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-white text-4xl transition-all duration-300 transform hover:scale-110">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                     <a href="https://www.patreon.com/c/LilyRosslyn" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-white text-4xl transition-all duration-300 transform hover:scale-110">
-                        <i class="fab fa-patreon"></i>
-                    </a>
-                    <a href="https://youtube.com/@LilyRosslyn" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-white text-4xl transition-all duration-300 transform hover:scale-110">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="mailto:hello@lilyrosslyn.com" class="text-purple-400 hover:text-white text-4xl transition-all duration-300 transform hover:scale-110">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+            <div class="container mx-auto fade-in-section">
+                 <div class="signup-container">
+                    <header class="header">
+                        <h1 class="signup-logo">
+                            THE PR<svg class="signup-atomic-symbol" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke-width="4" stroke="currentColor" fill="none"><circle cx="50" cy="50" r="8"/><ellipse transform="rotate(45 50 50)" cx="50" cy="50" rx="40" ry="15"/><ellipse transform="rotate(-45 50 50)" cx="50" cy="50" rx="40" ry="15"/><ellipse transform="rotate(90 50 50)" cx="50" cy="50" rx="40" ry="15"/></g></svg>JECT
+                        </h1>
+                    </header>
+                    <main class="main-content">
+                        <section class="hero">
+                            <h2 class="signup-headline glitch" data-text="Something happened in '86. The truth is in the static.">
+                                Something happened in '86. The truth is in the static.
+                            </h2>
+                        </section>
+                        <section class="story-section">
+                            <div class="terminal-box">
+                                <div class="terminal-header">
+                                    <span class="terminal-title">CLASSIFIED_FILES.DAT</span>
+                                    <span class="terminal-status">LOADING...</span>
+                                </div>
+                                <p class="signup-subheadline" id="typewriter-text"></p>
+                                <form id="signup-form">
+                                    <div class="form-group">
+                                        <label for="email">> ENTER YOUR EMAIL TO GAIN ACCESS:</label>
+                                        <input type="email" id="email" name="fields[email]" class="form-input" required autocomplete="email">
+                                    </div>
+                                    <button type="submit" class="submit-btn">JACK IN</button>
+                                    <p id="form-message" class="form-message"></p>
+                                </form>
+                            </div>
+                        </section>
+                    </main>
                 </div>
             </div>
         </section>
@@ -383,10 +543,7 @@
     <div id="video-modal" class="video-modal">
         <div class="video-modal-content">
             <span id="close-modal-btn" class="close-modal">&times;</span>
-            <video id="book-trailer-video" controls>
-                <source src="https://storage.googleapis.com/gemini-prod-us-central1-825353528143/61a51185-3b10-4828-98e3-057d82531a7f" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <iframe id="youtube-video" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -415,17 +572,16 @@
             const videoModal = document.getElementById('video-modal');
             const playBtn = document.getElementById('play-video-btn');
             const closeBtn = document.getElementById('close-modal-btn');
-            const video = document.getElementById('book-trailer-video');
+            const youtubeFrame = document.getElementById('youtube-video');
+            const youtubeVideoUrl = "https://www.youtube.com/embed/0q-Zd-MH-NY";
+
             const openModal = () => {
+                youtubeFrame.src = youtubeVideoUrl + "?autoplay=1";
                 videoModal.classList.add('active');
-                video.play().catch(error => {
-                    if (error.name !== 'AbortError') console.error("Video play error:", error);
-                });
             };
             const closeModal = () => {
+                youtubeFrame.src = "";
                 videoModal.classList.remove('active');
-                video.pause();
-                video.currentTime = 0;
             };
             playBtn.addEventListener('click', openModal);
             closeBtn.addEventListener('click', closeModal);
@@ -487,6 +643,47 @@
             });
             
             initParticles();
+
+            // --- Logic for the Embedded Signup Form ---
+            const textElement = document.getElementById('typewriter-text');
+            const textToType = "Join the investigation. Get classified Project updates and exclusive story files.";
+            let i = 0;
+            function typeWriter() {
+                if (textElement && i < textToType.length) {
+                    textElement.innerHTML += textToType.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                } else if (textElement) {
+                    textElement.style.borderRight = 'none';
+                }
+            }
+            typeWriter();
+
+            const form = document.getElementById('signup-form');
+            const formMessage = document.getElementById('form-message');
+
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault(); 
+                    formMessage.textContent = 'Connecting to the mainframe...';
+                    const mailerLiteActionUrl = 'https://assets.mailerlite.com/jsonp/1804898/forms/165903246149289160/subscribe';
+                    const formData = new FormData(form);
+
+                    fetch(mailerLiteActionUrl, {
+                        method: 'POST',
+                        body: formData,
+                        mode: 'no-cors' 
+                    })
+                    .then(response => {
+                        formMessage.textContent = 'Connection successful. Redirecting...';
+                        window.location.href = 'confirmation.html';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        formMessage.textContent = 'Connection failed. Please try again.';
+                    });
+                });
+            }
         });
     </script>
 </body>
