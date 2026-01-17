@@ -6,6 +6,8 @@
     <title>Lily Rosslyn | The Archives</title>
     <meta name="description" content="Lily Rosslyn - Curator of the weird and unseen. Author of The Project.">
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -365,7 +367,7 @@
         </div>
     </section>
 
-    <section class="py-24 bg-[#1a1816] border-t border-b border-gray-800 relative overflow-hidden">
+<section class="py-24 bg-[#1a1816] border-t border-b border-gray-800 relative overflow-hidden">
         <div class="absolute top-10 right-10 opacity-5 pointer-events-none transform rotate-12">
             <i class="fas fa-stamp text-9xl text-white"></i>
         </div>
@@ -381,26 +383,36 @@
             </p>
             
             <div id="mlb2-165903246149289160" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-165903246149289160">
-                <form action="https://assets.mailerlite.com/jsonp/1804898/forms/165903246149289160/subscribe" data-code="" method="post" target="_blank" class="flex flex-col gap-6">
-                    <div class="relative group">
-                        <input type="email" class="input-field" name="fields[email]" placeholder="ENTER CREDENTIALS (EMAIL)" autocomplete="email" required>
+                
+                <div class="row-success" style="display:none">
+                    <div class="text-green-500 font-mono text-center p-6 border border-green-900 bg-green-900/20">
+                        <p class="text-xl font-bold mb-2">TRANSMISSION RECEIVED.</p>
+                        <p class="text-sm">Check your inbox to confirm security clearance.</p>
                     </div>
-                    
-                    <input type="hidden" name="ml-submit" value="1">
-                    <div style="display: none;">
-                        <input type="text" name="fields[honeypot]" value="">
-                    </div>
+                </div>
 
-                    <button type="submit" class="submit-btn shadow-lg hover:shadow-amber-900/20">
-                        Transmit Data
-                    </button>
-                    
-                    <p class="text-xs text-gray-600 mt-2 italic">
-                        *Transmission is secure. No spam, only secrets.
-                    </p>
-                </form>
+                <div class="row-form">
+                    <form action="https://assets.mailerlite.com/jsonp/1804898/forms/165903246149289160/subscribe" data-code="" method="post" target="_blank" class="flex flex-col gap-6">
+                        <div class="relative group">
+                            <input type="email" class="input-field" name="fields[email]" placeholder="ENTER CREDENTIALS (EMAIL)" autocomplete="email" required>
+                        </div>
+                        
+                        <input type="hidden" name="ml-submit" value="1">
+                        <div style="display: none;">
+                            <input type="text" name="fields[honeypot]" value="">
+                        </div>
+
+                        <button type="submit" class="submit-btn shadow-lg hover:shadow-amber-900/20 primary">
+                            Transmit Data
+                        </button>
+                        
+                        <p class="text-xs text-gray-600 mt-2 italic">
+                            *Transmission is secure. No spam, only secrets.
+                        </p>
+                    </form>
+                </div>
             </div>
-            </div>
+        </div>
     </section>
 
     <footer class="py-16 text-center text-gray-600 border-t border-gray-800 mt-12 bg-[#121212]">
@@ -431,4 +443,5 @@
 
 </body>
 </html>
+
 
