@@ -566,10 +566,10 @@
                         menuEntry.className = 'log-entry';
                         menuEntry.style.borderLeft = "2px solid #ccff00";
                         
-                        // LINKS - Replace these as needed
-                        const linkPatreon = "https://www.patreon.com/LilyRosslyn"; 
-                        const linkShop = "https://lily-rosslyn.fourthwall.com/"; 
-                        const linkDesktop = "https://archive.lilyrosslyn.com"; 
+                        // --- UPDATED LINKS HERE ---
+                        const linkPatreon = "https://www.patreon.com/cw/LilyRosslyn"; 
+                        const linkShop = "https://shop.lilyrosslyn.com"; 
+                        const linkDesktop = "the-project.html"; 
 
                         menuEntry.innerHTML = `
                             <div class="log-time">ROOT_ACCESS_MENU</div>
@@ -578,10 +578,10 @@
                             </div>
                             <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
                                 <a href="${linkPatreon}" target="_blank" class="secret-link">
-                                    [1] READ THE STORY (ARCHIVES)
+                                    [1] READ THE STORY (PATREON)
                                 </a>
                                 <a href="${linkShop}" target="_blank" class="secret-link">
-                                    [2] ACQUIRE GEAR (SUPPLY ROOM)
+                                    [2] ACQUIRE GEAR (SHOP)
                                 </a>
                                 <a href="${linkDesktop}" class="secret-link">
                                     [3] RETURN TO DESKTOP
@@ -610,11 +610,11 @@
                      menuEntry.innerHTML = `
                         <div class="log-time">ROOT_ACCESS_MENU</div>
                         <div style="margin-top: 10px;">
-                            <a href="https://www.patreon.com/LilyRosslyn" target="_blank" class="secret-link">[ OPEN ARCHIVES ]</a>
+                            <a href="https://www.patreon.com/cw/LilyRosslyn" target="_blank" class="secret-link">[ OPEN ARCHIVES ]</a>
                         </div>
-                     `;
-                     output.appendChild(menuEntry);
-                     output.scrollTop = output.scrollHeight;
+                      `;
+                      output.appendChild(menuEntry);
+                      output.scrollTop = output.scrollHeight;
                 }, 2000);
             });
         }
