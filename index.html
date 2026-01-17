@@ -1,691 +1,429 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lily Rosslyn - Author of Supernatural Thrillers</title>
-    <meta name="description" content="Welcome to the official website of Lily Rosslyn, author of the supernatural sci-fi thriller 'The Project.' Explore the world where 80s tech, faith, and unseen realms collide.">
-    <!-- Google Fonts -->
+    <title>Lily Rosslyn | The Archives</title>
+    <meta name="description" content="Lily Rosslyn - Curator of the weird and unseen. Author of The Project.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600&family=Share+Tech+Mono&family=Exo+2:wght@400&family=VT323&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Special+Elite&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        /* Custom base styles and theme */
+        /* --- THE ARCHIVIST THEME --- */
+        :root {
+            --bg-color: #141210; /* Dark Obsidian */
+            --text-color: #dcd6ce; /* Bone White */
+            --accent-gold: #cfaa6d; /* Antique Brass */
+            --accent-leather: #6b4c35; /* Worn Leather */
+            --glitch-green: #00ff41; /* The Anomaly */
+        }
+
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background-color: #0a0c1f; /* Deep space blue */
-            color: #f0e6ff; /* Light violet text */
-            line-height: 1.7;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
             overflow-x: hidden;
+            line-height: 1.8;
         }
 
-        /* Custom Fonts */
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
-        .font-tech-mono { font-family: 'Share Tech Mono', monospace; }
-        .font-lora { font-family: 'Lora', serif; }
-        .font-cinzel { font-family: 'Cinzel', serif; }
-        .font-exo2 { font-family: 'Exo 2', sans-serif; }
-        .font-vt323 { font-family: 'VT323', monospace; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: #0a0c1f; }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #6d28d9, #be29ec);
-            border-radius: 6px;
-            border: 2px solid #0a0c1f;
-        }
-        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to bottom, #8b5cf6, #d896ff); }
-
-        /* Navigation Styling */
-        nav {
-            background: rgba(10, 12, 31, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(190, 41, 236, 0.3);
-        }
-        nav a:hover {
-            color: #be29ec;
-            text-shadow: 0 0 10px rgba(190, 41, 236, 0.8);
+        h1, h2, h3, .nav-link, .logo-text {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.05em;
         }
 
-        /* Background Effects Canvas */
-        #particle-canvas {
+        /* --- BACKGROUND TEXTURE --- */
+        .texture-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/black-scales.png");
+            opacity: 0.4;
             pointer-events: none;
-        }
-        
-        /* Glassmorphism Card Effect */
-        .glass-card {
-            background: rgba(17, 24, 39, 0.65);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(190, 41, 236, 0.4);
-            box-shadow: 0 0 25px rgba(190, 41, 236, 0.2), 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .glass-card:hover:not(.bible-verse-card) {
-            transform: translateY(-5px);
-            box-shadow: 0 0 40px rgba(190, 41, 236, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
-        }
-        
-        /* Bible Verse Card */
-        .bible-verse-card {
-            margin-top: 1.5rem;
-            max-width: 700px;
-        }
-        .bible-verse-card p.verse-text {
-            font-family: 'Lora', serif;
-            font-style: italic;
-        }
-        .bible-verse-card p.verse-ref {
-            font-family: 'Share Tech Mono', monospace;
-            color: #a5f3fc;
-            text-shadow: 0 0 8px #22d3ee;
-            text-align: right;
+            z-index: -1;
         }
 
-        /* Neon Text & Border Effects */
-        .neon-text-violet {
-            text-shadow: 0 0 8px #be29ec, 0 0 20px rgba(190, 41, 236, 0.8);
-        }
-        .neon-border-violet {
-             box-shadow: 0 0 15px rgba(190, 41, 236, 0.7);
-        }
-
-        /* Custom Button */
-        .btn-custom {
-            background-color: #6d28d9;
-            border: 2px solid #8b5cf6;
-            box-shadow: 0 0 15px #8b5cf6, inset 0 0 10px rgba(139, 92, 246, 0.7);
-            transition: all 0.3s ease;
-        }
-        .btn-custom:hover {
-            background-color: #8b5cf6;
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 0 25px #be29ec, inset 0 0 15px rgba(190, 41, 236, 1);
-        }
-
-        /* Fade-in Animation on Scroll */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Video Modal */
-        .video-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
+        /* --- HERO SECTION --- */
+        .hero-section {
+            /* LIBRARY BOOKSHELVES BACKGROUND (From Version 2) */
+            background: linear-gradient(to bottom, rgba(20, 18, 16, 0.6), rgba(20, 18, 16, 1)), 
+                        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2690&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .video-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .video-modal-content {
             position: relative;
-            width: 90%;
-            max-width: 960px;
-        }
-        .video-modal-content iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 8px;
-            border: 2px solid #be29ec;
-        }
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
         }
 
-        /* Shooting Star Animation */
-        .shooting-star-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* --- TYPEWRITER FONT --- */
+        .typewriter-text {
+            font-family: 'Special Elite', monospace;
+        }
+
+        /* --- GLITCH BUTTON --- */
+        .glitch-btn {
+            font-family: 'Share Tech Mono', monospace;
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid var(--glitch-green);
+            color: var(--glitch-green);
+            padding: 1rem 2rem;
+            position: relative;
             overflow: hidden;
-        }
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: white;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #fff, 0 0 20px rgba(255, 255, 255, 0.7);
-            opacity: 0;
-            animation: shooting-star 10s linear infinite;
-        }
-        .star::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 2px;
-            height: 1px;
-            width: 150px;
-            background: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5));
-            border-radius: 50%;
-            filter: blur(1px);
-        }
-        .star:nth-child(1) { top: 10%; left: -10%; animation-delay: 0s; }
-        .star:nth-child(2) { top: 40%; left: -10%; animation-delay: 3.2s; }
-        .star:nth-child(3) { top: 70%; left: -10%; animation-delay: 6.5s; }
-        @keyframes shooting-star {
-            0% { transform: translateX(0) rotate(25deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateX(120vw) rotate(25deg); opacity: 0; }
-        }
-
-        /* --- STYLES FOR EMBEDDED SIGNUP FORM --- */
-        .signup-container {
-            width: 100%;
-            max-width: 700px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            margin: 0 auto;
-        }
-        .signup-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            color: var(--text-color);
-            margin-bottom: 1.5rem;
-        }
-        .signup-atomic-symbol {
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             display: inline-block;
-            width: 1em;
-            height: 1em;
-            position: relative;
-            top: 0.1em;
-            color: #ff00c1;
-            filter: drop-shadow(0 0 5px #ff00c1);
+            margin-top: 2rem;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
         }
-        .signup-headline {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: clamp(1.25rem, 5vw, 1.75rem);
-            margin-bottom: 1rem;
-            position: relative;
+
+        .glitch-btn:hover {
+            background: var(--glitch-green);
+            color: black;
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
         }
-        .glitch {
-            position: relative;
-            color: #e6edf3;
-            text-shadow: 0 0 2px rgba(230, 237, 243, 0.5);
-        }
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+
+        /* --- ACTIVE CASE FILES (Cards) --- */
+        .archive-card {
+            background: #1a1816;
+            border: 1px solid #333;
+            transition: transform 0.3s ease, border-color 0.3s ease;
             height: 100%;
-            background: #0a0c1f;
-            overflow: hidden;
-        }
-        .glitch::before {
-            left: 2px;
-            text-shadow: -1px 0 #ff00c1;
-            animation: glitch-anim-1 2s infinite linear alternate-reverse;
-        }
-        .glitch::after {
-            left: -2px;
-            text-shadow: -1px 0 #00ffff;
-            animation: glitch-anim-2 2s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim-1 { 0% { clip-path: inset(45% 0 50% 0); } 100% { clip-path: inset(5% 0 80% 0); } }
-        @keyframes glitch-anim-2 { 0% { clip-path: inset(60% 0 30% 0); } 100% { clip-path: inset(90% 0 5% 0); } }
-        .signup-subheadline {
-            min-height: 2.5em;
-            font-family: 'VT323', monospace;
-            font-size: 1.25rem;
-            color: #00ff00;
-            white-space: pre-wrap;
-            margin-bottom: 1.5rem;
-        }
-        .signup-subheadline::after {
-            content: '_';
-            animation: cursor-blink 1s infinite;
-        }
-        .terminal-box {
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.2);
-            padding: 1.5rem 2rem;
-            text-align: left;
-            background-color: #0D1117;
-        }
-        .terminal-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #00ff00;
+            flex-direction: column;
+            position: relative;
         }
-        .terminal-title, .terminal-status {
-            font-family: 'VT323', monospace;
-            font-size: 1.25rem;
-            text-transform: uppercase;
-            color: #00ff00;
+
+        .archive-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            background: #22201e;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-family: 'VT323', monospace;
-            font-size: 1.25rem;
-            color: #00ff00;
-        }
-        .form-input {
-            width: 100%;
-            background-color: #000;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            font-family: 'VT323', monospace;
-            font-size: 1.25rem;
-            padding: 0.75rem;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        .form-input:focus {
-            outline: none;
-            box-shadow: 0 0 10px #00ff00;
-        }
-        .submit-btn {
-            background-color: transparent;
-            border: 2px solid #00ff00;
-            color: #00ff00;
-            font-family: 'VT323', monospace;
-            font-size: 1.5rem;
-            padding: 0.75rem 1.5rem;
-            margin-top: 1.5rem;
-            cursor: pointer;
-            width: 100%;
-            text-transform: uppercase;
+
+        /* --- BLOG CARDS --- */
+        .journal-card {
+            background: #1a1816;
+            border: 1px solid #333;
+            padding: 2rem;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none; /* Removed underline from link block */
+        }
+        .journal-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            background: #22201e;
+        }
+
+        /* --- FORM STYLES --- */
+        .input-field {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #444;
+            color: var(--accent-gold);
+            font-family: 'Special Elite', monospace;
+            width: 100%;
+            padding: 10px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-field:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .submit-btn {
+            background-color: var(--accent-gold);
+            color: #141210;
+            font-weight: bold;
+            font-family: 'Cinzel', serif;
+            padding: 12px 30px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
         }
         .submit-btn:hover {
-            background-color: #00ff00;
-            color: #0D1117;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            background-color: white;
+            letter-spacing: 3px;
         }
-        .form-message {
-            margin-top: 1rem;
-            font-size: 1rem;
-            height: 1.2rem;
-            color: #00ff00;
-            font-family: 'VT323', monospace;
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
         }
-        @keyframes cursor-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .section-header p {
+            color: #888;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.9rem;
         }
 
     </style>
 </head>
-<body class="antialiased relative">
-    
-    <!-- Wispy Particle Background -->
-    <canvas id="particle-canvas"></canvas>
+<body>
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 p-4">
-        <nav class="container mx-auto flex justify-between items-center">
-            <a href="#hero" class="text-2xl font-orbitron font-bold tracking-wider flex items-center gap-3">
-                <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/fb781345-55f1-4065-b6aa-ecae0bbb8169_rwc_0x0x280x280x4096.png?h=e9020f74f2cc9f28c84e59d74e68e957" alt="Lily Rosslyn Logo" class="h-10 w-10 rounded-full neon-border-violet" onerror="this.src='https://placehold.co/40x40/0a0c1f/f0e6ff?text=LR'; this.onerror=null;">
-                <span>Lily Rosslyn</span>
-            </a>
-            <div class="hidden md:flex space-x-6 font-semibold">
-                <a href="#the-project" class="transition-colors duration-300">The Project</a>
-                <a href="#blog" class="transition-colors duration-300">Blog</a>
-                <a href="#about-stories" class="transition-colors duration-300">My Stories</a>
-                <a href="#about-me" class="transition-colors duration-300">About</a>
-                <a href="#connect" class="transition-colors duration-300">Connect</a>
+    <div class="texture-overlay"></div>
+
+    <nav class="absolute top-0 w-full p-6 flex justify-between items-center z-20">
+        <a href="#" class="block">
+            <img 
+                src="images/logo.png" 
+                alt="Lily Rosslyn Logo" 
+                class="w-20 h-auto object-contain hover:brightness-110 transition-all drop-shadow-md"
+            >
+        </a>
+        
+        <div class="hidden md:flex gap-8 text-sm text-gray-400 font-bold tracking-widest uppercase">
+            <a href="#expedition" class="nav-link hover:text-amber-500 transition">The Expedition</a>
+            <a href="#books" class="nav-link hover:text-amber-500 transition">Case Files</a>
+            <a href="#field-notes" class="nav-link hover:text-amber-500 transition">Field Notes</a>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="text-center px-4 max-w-4xl relative z-10">
+            
+            <p class="text-amber-500 font-serif italic mb-6 text-xl tracking-wide opacity-90 text-shadow">
+                "For now we see in a mirror dimly, but then face to face..."
+            </p>
+
+            <h1 class="text-6xl md:text-8xl text-white font-bold mb-4 leading-tight drop-shadow-2xl">
+                LILY ROSSLYN
+            </h1>
+            
+            <div class="h-px w-32 bg-amber-600 mx-auto mb-8 opacity-70"></div>
+            
+            <p class="text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
+                Archivist of the weird. <br>
+                Exploring the thin places between science, faith, and the supernatural.
+            </p>
+            
+            <div>
+                <a href="https://archive.lilyrosslyn.com" target="_blank" class="glitch-btn group">
+                    <span class="group-hover:animate-pulse">[ ACCESS EVIDENCE LOCKER ]</span>
+                </a>
+                <p class="text-xs text-green-900 mt-3 font-mono typewriter-text">/// SYSTEM BREACH DETECTED ///</p>
             </div>
-        </nav>
+        </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="min-h-screen flex items-center justify-center text-center px-4 relative overflow-hidden">
-             <div class="shooting-star-container">
-                <div class="star"></div>
-                <div class="star"></div>
-                <div class="star"></div>
-            </div>
-            <div class="z-10 flex flex-col items-center">
-                <h1 class="text-5xl md:text-7xl font-orbitron font-extrabold neon-text-violet uppercase tracking-widest">Lily Rosslyn</h1>
-                <p class="mt-4 text-xl md:text-2xl font-rajdhani font-semibold">Author of Supernatural Thrillers</p>
-                <div class="glass-card bible-verse-card p-6">
-                    <p class="verse-text text-lg">"For now we see in a mirror dimly, but then face to face. Now I know in part; then I shall know fully, even as I have been fully known."</p>
-                    <p class="verse-ref mt-2">1 Corinthians 13:12</p>
+    <section id="expedition" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1">
+                <h2 class="text-4xl text-white mb-6 font-serif">From the Desk of the Archivist</h2>
+                <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                    Some stories aren't invented; they are excavated from the dark.
+                </p>
+                <p class="text-gray-400 mb-6 leading-relaxed">
+                    I am Lily Rosslyn. My work involves digging through the static of the digital age and the dust of forgotten libraries to find the threads that connect our reality to the ones just next door.
+                </p>
+                <div class="border-l-2 border-amber-600 pl-6 py-2 mt-8">
+                    <p class="text-gray-500 typewriter-text text-sm">
+                        CURRENT STATUS: Decrypting the "RAEtron" incident of 1986. <br>
+                        LOCATION: Undisclosed.
+                    </p>
                 </div>
-                <a href="#the-project" class="mt-8 inline-block btn-custom text-white font-bold py-3 px-8 rounded-lg uppercase tracking-wider">Explore "The Project"</a>
             </div>
-        </section>
-
-        <!-- The Project Section -->
-        <section id="the-project" class="py-20 md:py-32 px-4">
-            <div class="container mx-auto fade-in-section">
-                <h2 class="text-4xl md:text-5xl font-orbitron font-bold text-center mb-16 neon-text-violet">Featuring: The Project</h2>
-                <div class="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
-                    <!-- Left Column: Synopsis & Details -->
-                    <div class="space-y-8">
-                        <div class="glass-card p-8 rounded-xl">
-                            <h3 class="text-3xl font-orbitron font-semibold mb-4 text-cyan-300">Synopsis</h3>
-                            <p class="text-gray-300 text-justify">It's 1986. When high schooler Robbie gets a glimpse of a revolutionary VR demo, he recruits a ragtag crew of misfits for an ambitious science fair project: to build their own virtual world. Their creation exceeds their wildest dreams, but a glitch reveals a terrifying truth—their device has unlocked a gateway to a sinister alternate dimension. As demonic creatures bleed into their reality and an ominous corporation seeks to exploit their discovery, the friends must venture into the darkness they unleashed to fix the fraying fabric of reality before it's consumed by shadows.</p>
-                             <a href="the-project.html" target="_blank" class="mt-6 inline-block btn-custom text-white font-bold py-2 px-6 rounded-lg text-sm uppercase tracking-wider">Explore the World of The Project</a>
-                        </div>
-                         <div class="glass-card p-8 rounded-xl">
-                            <h3 class="text-3xl font-orbitron font-semibold mb-4 text-cyan-300">First Look Trailer</h3>
-                            <p class="text-gray-300 mb-4">Watch the exclusive first look at "The Project" and get a glimpse of the world where science and the supernatural collide.</p>
-                            <button id="play-video-btn" class="btn-custom text-white font-bold py-2 px-6 rounded-lg uppercase tracking-wider">
-                                <i class="fas fa-play mr-2"></i> Watch Trailer
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Right Column: Book Cover -->
-                    <div class="flex justify-center">
-                         <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/a5ee9a7f-808f-4cd7-a522-a0fe1b6d06cf_rw_1920.jpg?h=e12efcb6c0d14eb797eb03d76d33621f" alt="Book Cover for The Project" class="rounded-lg shadow-2xl max-w-sm w-full neon-border-violet border-2 border-purple-500" onerror="this.src='https://placehold.co/400x600/0a0c1f/f0e6ff?text=The+Project'; this.onerror=null;">
+            
+            <div class="order-1 md:order-2 relative group">
+                <div class="absolute -inset-2 bg-amber-900/20 rotate-2 group-hover:rotate-1 transition duration-500"></div>
+                <div class="aspect-square bg-neutral-900 border border-neutral-700 relative p-2 shadow-2xl">
+                    <div class="h-full w-full bg-neutral-800 flex items-center justify-center overflow-hidden">
+                        <img 
+                            src="images/bio.jpg" 
+                            alt="Lily Rosslyn" 
+                            class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"
+                        >
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <!-- Blog Section -->
-        <section id="blog" class="py-20 md:py-32 px-4 bg-black bg-opacity-20">
-            <div class="container mx-auto fade-in-section">
-                 <h2 class="text-4xl md:text-5xl font-orbitron font-bold text-center mb-16 neon-text-violet">The Blog</h2>
-                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Post 1 -->
-                    <a href="https://lilyrosslyn.notion.site/Are-You-Willing-1e8cb41c48d381e1aa14e829b932f459" target="_blank" rel="noopener noreferrer" class="glass-card p-6 block">
-                        <h3 class="font-orbitron text-xl text-cyan-300 mb-2">Are You Willing?</h3>
-                        <p class="text-gray-400 text-sm mb-4">When God asks "Are you willing?", He's inviting us into a transformative journey beyond our comfort zones...</p>
-                        <span class="font-tech-mono text-purple-400">Read More &rarr;</span>
-                    </a>
-                    <!-- Post 2 -->
-                     <a href="https://lilyrosslyn.notion.site/Deception-1eacb41c48d380409bfaec3c1269a890" target="_blank" rel="noopener noreferrer" class="glass-card p-6 block">
-                        <h3 class="font-orbitron text-xl text-cyan-300 mb-2">Deception</h3>
-                        <p class="text-gray-400 text-sm mb-4">In a world where truth blurs with illusion, deception weaves its web through our daily lives. Unmask the subtle lies...</p>
-                        <span class="font-tech-mono text-purple-400">Read More &rarr;</span>
-                    </a>
-                    <!-- All Posts -->
-                     <a href="https://lilyrosslyn.notion.site/Lily-Rosslyn-The-Blog-1e8cb41c48d38079a0e4f02d84af8960" target="_blank" rel="noopener noreferrer" class="glass-card p-6 flex flex-col items-center justify-center text-center">
-                        <i class="fas fa-book-open text-4xl mb-4 text-purple-400"></i>
-                        <h3 class="font-orbitron text-xl text-cyan-300">Explore All Posts</h3>
-                        <p class="text-gray-400 text-sm">Venture deeper into the archives.</p>
-                    </a>
-                 </div>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- About Stories Section -->
-        <section id="about-stories" class="py-20 md:py-32 px-4">
-            <div class="container mx-auto fade-in-section">
-                <div class="glass-card p-8 md:p-12 rounded-xl max-w-4xl mx-auto text-center">
-                    <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-8 neon-text-violet">About My Stories</h2>
-                    <p class="text-gray-300 mb-4">My stories blend supernatural thrills with deeper spiritual themes, exploring the hidden dimensions of our world through a lens of faith and scientific discovery. They're supernatural thrillers that examine spiritual warfare, divine truth, and the mysteries of creation in unexpected ways.</p>
-                    <p class="font-tech-mono text-cyan-300">Perfect for readers who enjoy the intersection of science and faith, and stories that challenge conventional thinking about spirituality.</p>
-                </div>
+    <section id="books" class="py-24 bg-[#0f0e0d]">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="section-header">
+                <h2>Active Case Files</h2>
+                <p>CATALOG: 2024-25</p>
             </div>
-        </section>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <div class="archive-card p-8 group">
+                    <div class="absolute top-0 right-0 bg-green-900 text-green-300 text-xs px-3 py-1 font-mono">
+                        STATUS: DECLASSIFIED
+                    </div>
+                    
+                    <h3 class="text-2xl text-white mb-2 font-serif">FILE #001: The Project</h3>
+                    <p class="text-green-500 font-mono text-sm mb-6">> 1986 // SCI-FI THRILLER // VR ANOMALY</p>
+                    
+                    <div class="w-full aspect-[2/3] bg-gray-800 mb-6 border border-gray-700 flex items-center justify-center text-gray-600 text-xs shadow-inner overflow-hidden">
+                        <img 
+                            src="images/book_cover.jpg" 
+                            alt="The Project Book Cover" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                        >
+                    </div>
 
-        <!-- About the Author Section -->
-        <section id="about-me" class="py-20 md:py-32 px-4 bg-black bg-opacity-20">
-            <div class="container mx-auto fade-in-section">
-                <h2 class="text-4xl md:text-5xl font-orbitron font-bold text-center mb-16 neon-text-violet">About The Author</h2>
-                <div class="glass-card p-8 md:p-12 rounded-xl max-w-4xl mx-auto">
-                    <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-                        <img src="https://i.pinimg.com/280x280_RS/79/8d/ae/798dae255bacabee8fd80c3eef311206.jpg" alt="Author Lily Rosslyn" class="w-48 h-48 rounded-full object-cover flex-shrink-0 border-4 border-purple-500 neon-border-violet p-1" onerror="this.src='https://placehold.co/192x192/0a0c1f/f0e6ff?text=Lily'; this.onerror=null;">
-                        <div>
-                            <h3 class="text-3xl font-orbitron font-semibold text-cyan-300 mb-2">Lily Rosslyn</h3>
-                            <p class="text-gray-300 text-justify">Inspired by the legendary works of J.R.R. Tolkien and C.S. Lewis, Lily Rosslyn weaves enchanting stories that unveil the epic battles between light and shadow in unseen realms. By blending Urban Supernatural, Science Fiction, and Fantasy, she explores the fine line between human ambition and the supernatural powers shaping our universe, all while showcasing our divine strength to conquer darkness.</p>
-                        </div>
+                    <p class="text-gray-400 mb-6 flex-grow leading-relaxed">
+                        When a group of high school outcasts builds a virtual reality system in a basement, they accidentally tear a hole in the fabric of the world. Now, something is looking back at them through the screen.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mt-auto">
+                        <a href="https://archive.lilyrosslyn.com" class="text-white border border-gray-600 px-6 py-2 hover:border-amber-500 hover:text-amber-500 transition text-center text-sm uppercase tracking-widest">
+                            Read the Book
+                        </a>
+                        <a href="console.html" class="text-green-500 border border-green-800 px-6 py-2 hover:bg-green-900/30 transition text-center text-sm font-mono uppercase tracking-widest">
+                            <i class="fas fa-terminal mr-2"></i> Run Simulation
+                        </a>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <!-- Coming Soon Section -->
-        <section id="coming-soon" class="py-20 md:py-32 px-4">
-             <div class="container mx-auto text-center fade-in-section">
-                <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-12 neon-text-violet">Coming Soon...</h2>
-                <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-                    <div class="glass-card p-8">
-                        <h3 class="text-2xl font-orbitron font-semibold text-cyan-300">The Neighborhood</h3>
-                        <p class="text-gray-400 mt-2 font-tech-mono">A new journey into the unseen.</p>
+
+                <div class="archive-card p-8 border-dashed border-gray-700 opacity-60">
+                    <div class="absolute top-0 right-0 bg-gray-800 text-gray-500 text-xs px-3 py-1 font-mono">
+                        STATUS: ENCRYPTED
                     </div>
-                     <div class="glass-card p-8">
-                        <h3 class="text-2xl font-orbitron font-semibold text-cyan-300">Inconspicuous</h3>
-                        <p class="text-gray-400 mt-2 font-tech-mono">Secrets lie hidden in plain sight.</p>
+                    
+                    <h3 class="text-2xl text-gray-500 mb-2 font-serif">FILE #002: [REDACTED]</h3>
+                    <p class="text-gray-600 font-mono text-sm mb-6">> AWAITING SIGNAL...</p>
+                    
+                    <div class="w-full aspect-[2/3] bg-gray-900 mb-6 border-2 border-dashed border-gray-800 flex items-center justify-center text-gray-700">
+                        <i class="fas fa-lock text-4xl"></i>
+                    </div>
+
+                    <p class="text-gray-600 mb-6 flex-grow leading-relaxed">
+                        Data corruption detected. The Archivist is currently gathering evidence. Signal strength is weak. Expect transmission soon.
+                    </p>
+                    
+                    <div class="mt-auto pt-4 border-t border-gray-800 text-center">
+                        <span class="text-gray-600 italic text-sm">Access Denied</span>
                     </div>
                 </div>
+
             </div>
-        </section>
+        </div>
+    </section>
 
+    <section id="field-notes" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="section-header">
+            <h2>Field Notes</h2>
+            <p>DISPATCHES FROM THE WRITING DESK</p>
+        </div>
 
-        <!-- Connect Section with Embedded Form -->
-        <section id="connect" class="py-20 md:py-32 px-4 bg-black bg-opacity-20">
-            <div class="container mx-auto fade-in-section">
-                 <div class="signup-container">
-                    <header class="header">
-                        <h1 class="signup-logo">
-                            THE PR<svg class="signup-atomic-symbol" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke-width="4" stroke="currentColor" fill="none"><circle cx="50" cy="50" r="8"/><ellipse transform="rotate(45 50 50)" cx="50" cy="50" rx="40" ry="15"/><ellipse transform="rotate(-45 50 50)" cx="50" cy="50" rx="40" ry="15"/><ellipse transform="rotate(90 50 50)" cx="50" cy="50" rx="40" ry="15"/></g></svg>JECT
-                        </h1>
-                    </header>
-                    <main class="main-content">
-                        <section class="hero">
-                            <h2 class="signup-headline glitch" data-text="Something happened in '86. The truth is in the static.">
-                                Something happened in '86. The truth is in the static.
-                            </h2>
-                        </section>
-                        <section class="story-section">
-                            <div class="terminal-box">
-                                <div class="terminal-header">
-                                    <span class="terminal-title">CLASSIFIED_FILES.DAT</span>
-                                    <span class="terminal-status">LOADING...</span>
-                                </div>
-                                <p class="signup-subheadline" id="typewriter-text"></p>
-                                <form id="signup-form">
-                                    <div class="form-group">
-                                        <label for="email">> ENTER YOUR EMAIL TO GAIN ACCESS:</label>
-                                        <input type="email" id="email" name="fields[email]" class="form-input" required autocomplete="email">
-                                    </div>
-                                    <button type="submit" class="submit-btn">JACK IN</button>
-                                    <p id="form-message" class="form-message"></p>
-                                </form>
-                            </div>
-                        </section>
-                    </main>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <a href="" class="journal-card group">
+                <div class="border-b border-gray-800 pb-4 mb-4">
+                    <span class="text-amber-700 text-xs font-bold tracking-widest block font-mono">OCT 14, 1986</span>
                 </div>
-            </div>
-        </section>
-    </main>
+                <h3 class="text-xl text-gray-200 mb-3 font-serif group-hover:text-amber-500 transition">The Myth of RAEtron</h3>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed flex-grow">
+                    Why did technology feel more 'haunted' in the 80s? Exploring the analog horror behind the book...
+                </p>
+                <div class="text-amber-600 text-xs uppercase tracking-wider group-hover:text-white transition mt-auto">Read Entry &rarr;</div>
+            </a>
 
-    <footer class="py-8 border-t border-purple-500 border-opacity-20">
-        <div class="container mx-auto text-center text-gray-500 font-tech-mono">
-            <p>&copy; <span id="currentYear"></span> Lily Rosslyn. All Rights Reserved.</p>
+            <a href="" class="journal-card group">
+                <div class="border-b border-gray-800 pb-4 mb-4">
+                    <span class="text-amber-700 text-xs font-bold tracking-widest block font-mono">LOG 004</span>
+                </div>
+                <h3 class="text-xl text-gray-200 mb-3 font-serif group-hover:text-amber-500 transition">Why I Write Monsters</h3>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed flex-grow">
+                    Monsters aren't just scary; they are necessary. They are the shadow side of hope.
+                </p>
+                <div class="text-amber-600 text-xs uppercase tracking-wider group-hover:text-white transition mt-auto">Read Entry &rarr;</div>
+            </a>
+
+            <a href="" class="journal-card group">
+                <div class="border-b border-gray-800 pb-4 mb-4">
+                    <span class="text-amber-700 text-xs font-bold tracking-widest block font-mono">UPDATE</span>
+                </div>
+                <h3 class="text-xl text-gray-200 mb-3 font-serif group-hover:text-amber-500 transition">Expedition Status</h3>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed flex-grow">
+                    The manuscript has been recovered. Editing phase initiates at dawn. Coffee supplies low.
+                </p>
+                <div class="text-amber-600 text-xs uppercase tracking-wider group-hover:text-white transition mt-auto">Read Entry &rarr;</div>
+            </a>
+            
+        </div>
+    </section>
+
+    <section class="py-24 bg-[#1a1816] border-t border-b border-gray-800 relative overflow-hidden">
+        <div class="absolute top-10 right-10 opacity-5 pointer-events-none transform rotate-12">
+            <i class="fas fa-stamp text-9xl text-white"></i>
+        </div>
+
+        <div class="max-w-xl mx-auto px-6 text-center relative z-10">
+            <div class="mb-6 inline-block p-3 border-2 border-amber-800 rounded-full">
+                <i class="fas fa-paper-plane text-2xl text-amber-700"></i>
+            </div>
+            
+            <h2 class="text-3xl text-white mb-4">Secure Dispatches</h2>
+            <p class="text-gray-400 mb-10 typewriter-text text-sm max-w-sm mx-auto">
+                // JOIN THE INNER CIRCLE. RECEIVE CLASSIFIED UPDATES, DECRYPTED LORE, AND EARLY ACCESS.
+            </p>
+            
+            <div id="mlb2-165903246149289160" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-165903246149289160">
+                <form action="https://assets.mailerlite.com/jsonp/1804898/forms/165903246149289160/subscribe" data-code="" method="post" target="_blank" class="flex flex-col gap-6">
+                    <div class="relative group">
+                        <input type="email" class="input-field" name="fields[email]" placeholder="ENTER CREDENTIALS (EMAIL)" autocomplete="email" required>
+                    </div>
+                    
+                    <input type="hidden" name="ml-submit" value="1">
+                    <div style="display: none;">
+                        <input type="text" name="fields[honeypot]" value="">
+                    </div>
+
+                    <button type="submit" class="submit-btn shadow-lg hover:shadow-amber-900/20">
+                        Transmit Data
+                    </button>
+                    
+                    <p class="text-xs text-gray-600 mt-2 italic">
+                        *Transmission is secure. No spam, only secrets.
+                    </p>
+                </form>
+            </div>
+            </div>
+    </section>
+
+    <footer class="py-16 text-center text-gray-600 border-t border-gray-800 mt-12 bg-[#121212]">
+        <div class="flex justify-center gap-8 mb-8 text-xl">
+            <a href="#" class="hover:text-amber-500 transition transform hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-amber-500 transition transform hover:-translate-y-1"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-amber-500 transition transform hover:-translate-y-1"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.patreon.com/LilyRosslyn" class="hover:text-amber-500 transition transform hover:-translate-y-1"><i class="fab fa-patreon"></i></a>
+        </div>
+        <p class="text-sm font-serif">&copy; 2024 Lily Rosslyn. Archivist & Author.</p>
+        <div class="mt-6 opacity-50 hover:opacity-100 transition">
+            <a href="console.html" class="text-xs font-mono text-green-900 hover:text-green-500 border border-green-900/30 px-2 py-1 rounded hover:bg-green-900/10">
+                [ SYSTEM BACKDOOR ]
+            </a>
         </div>
     </footer>
-    
-    <!-- Video Modal -->
-    <div id="video-modal" class="video-modal">
-        <div class="video-modal-content">
-            <span id="close-modal-btn" class="close-modal">&times;</span>
-            <iframe id="youtube-video" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div>
-
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set current year in footer
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-            // Intersection Observer for fade-in animations
-            const sections = document.querySelectorAll('.fade-in-section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
-            // Video Modal Logic
-            const videoModal = document.getElementById('video-modal');
-            const playBtn = document.getElementById('play-video-btn');
-            const closeBtn = document.getElementById('close-modal-btn');
-            const youtubeFrame = document.getElementById('youtube-video');
-            const youtubeVideoUrl = "https://www.youtube.com/embed/0q-Zd-MH-NY";
-
-            const openModal = () => {
-                youtubeFrame.src = youtubeVideoUrl + "?autoplay=1";
-                videoModal.classList.add('active');
-            };
-            const closeModal = () => {
-                youtubeFrame.src = "";
-                videoModal.classList.remove('active');
-            };
-            playBtn.addEventListener('click', openModal);
-            closeBtn.addEventListener('click', closeModal);
-            videoModal.addEventListener('click', (e) => {
-                 if (e.target === videoModal) closeModal();
-            });
-
-            // Wispy Particle Animation
-            const canvas = document.getElementById('particle-canvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            
-            const setCanvasSize = () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            };
-
-            const createParticles = () => {
-                particles = [];
-                const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        vx: Math.random() * 0.4 - 0.2,
-                        vy: Math.random() * 0.4 - 0.2,
-                        radius: Math.random() * 1.5 + 0.5,
-                        color: `rgba(224, 208, 255, ${Math.random() * 0.5 + 0.2})`
-                    });
-                }
-            };
-            
-            const animateParticles = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-
-                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color;
-                    ctx.fill();
-                });
-                requestAnimationFrame(animateParticles);
-            };
-
-            const initParticles = () => {
-                setCanvasSize();
-                createParticles();
-                animateParticles();
-            };
-            
-            window.addEventListener('resize', () => {
-                 setCanvasSize();
-                 createParticles();
-            });
-            
-            initParticles();
-
-            // --- Logic for the Embedded Signup Form ---
-            const textElement = document.getElementById('typewriter-text');
-            const textToType = "Join the investigation. Get classified Project updates and exclusive story files.";
-            let i = 0;
-            function typeWriter() {
-                if (textElement && i < textToType.length) {
-                    textElement.innerHTML += textToType.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
-                } else if (textElement) {
-                    textElement.style.borderRight = 'none';
-                }
-            }
-            typeWriter();
-
-            const form = document.getElementById('signup-form');
-            const formMessage = document.getElementById('form-message');
-
-            if (form) {
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault(); 
-                    formMessage.textContent = 'Connecting to the mainframe...';
-                    const mailerLiteActionUrl = 'https://assets.mailerlite.com/jsonp/1804898/forms/165903246149289160/subscribe';
-                    const formData = new FormData(form);
-
-                    fetch(mailerLiteActionUrl, {
-                        method: 'POST',
-                        body: formData,
-                        mode: 'no-cors' 
-                    })
-                    .then(response => {
-                        formMessage.textContent = 'Connection successful. Redirecting...';
-                        window.location.href = 'confirmation.html';
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        formMessage.textContent = 'Connection failed. Please try again.';
-                    });
-                });
-            }
-        });
+        function ml_webform_success_165903246149289160() {
+            var $ = ml_jQuery || jQuery;
+            $('.ml-subscribe-form-165903246149289160 .row-success').show();
+            $('.ml-subscribe-form-165903246149289160 .row-form').hide();
+        }
     </script>
+    <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v2d8fb22bb5b3677f161552cd9e774127" type="text/javascript"></script>
+
 </body>
 </html>
-
