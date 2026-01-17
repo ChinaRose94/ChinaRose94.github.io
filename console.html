@@ -91,12 +91,14 @@
         /* --- CONTENT AREA --- */
         #output-screen {
             flex-grow: 1;
+            /* Added min-height to prevent collapse, but max-height to ensure buttons fit */
+            min-height: 0; 
             border: 1px solid var(--term-dim);
             padding: 15px;
             overflow-y: auto;
             font-family: 'Courier Prime', monospace;
             font-size: 0.9rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Reduced margin slightly */
             background: rgba(0, 50, 0, 0.1);
             box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
         }
@@ -650,3 +652,4 @@
     </script>
 </body>
 </html>
+
