@@ -3,1399 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Project | Lily Rosslyn</title>
+    <title>RAEtron Systems | v1.1.0</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=VT323&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* FONT STACK */
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Courier+Prime:wght@400;700&family=Orbitron:wght@700&display=swap');
+
         :root {
-            --primary: #3b0764;
-            --secondary: #7e22ce;
-            --accent: #c026d3;
-            --light: #f5f3ff;
-            --dark: #1e1b4b;
-            --neon: #d946ef;
-            --neon-blue: #00ffff;
-            --neon-pink: #ff00ff;
-            --neon-purple: #bf00ff;
-            --retro-black: #0f0f1a;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: 'Quicksand', sans-serif;
-            color: var(--light);
-            background-color: var(--retro-black);
-            overflow-x: hidden;
-        }
-        
-        h1, h2, h3, h4, h5 {
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
-        }
-        
-        .retro-text {
-            font-family: 'VT323', monospace;
-        }
-        
-        .nav-link {
-            position: relative;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: var(--neon);
-            transition: width 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-            box-shadow: 0 0 8px var(--neon), 0 0 12px var(--neon);
-        }
-        
-        .btn-primary {
-            background-color: var(--secondary);
-            color: white;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.7s ease;
-            z-index: -1;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px var(--accent);
-        }
-        
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--secondary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px var(--secondary);
-        }
-        
-        .btn-neon {
-            background-color: transparent;
-            border: 2px solid var(--neon-blue);
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-            box-shadow: 0 0 5px var(--neon-blue), inset 0 0 5px var(--neon-blue);
-            transition: all 0.3s ease;
-            font-family: 'VT323', monospace;
-            letter-spacing: 1px;
-        }
-        
-        .btn-neon:hover {
-            background-color: var(--neon-blue);
-            color: var(--retro-black);
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px var(--neon-blue);
-        }
-        
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: rgba(30, 27, 75, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(126, 34, 206, 0.3);
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(192, 38, 211, 0.5);
-        }
-        
-        .social-icon {
-            transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            transform: translateY(-3px);
-            color: var(--neon);
-            text-shadow: 0 0 10px var(--neon);
-        }
-        
-        /* 80s Grid Background */
-        .grid-bg {
-            background-color: var(--retro-black);
-            background-image: 
-                linear-gradient(rgba(191, 0, 255, 0.2) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(191, 0, 255, 0.2) 1px, transparent 1px);
-            background-size: 40px 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .grid-bg::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: radial-gradient(circle at center, transparent 0%, var(--retro-black) 70%);
-            z-index: 1;
-        }
-        
-        /* Retro Sun */
-        .retro-sun {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(to top, 
-                rgba(255, 0, 128, 0.7) 0%, 
-                rgba(255, 102, 0, 0.5) 20%, 
-                rgba(255, 204, 0, 0.3) 40%, 
-                transparent 80%);
-            border-radius: 50% 50% 0 0;
-            z-index: 0;
-        }
-        
-        /* VHS Scanlines */
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.03) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            background-size: 100% 4px;
-            z-index: 999;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-        
-        /* Glowing elements */
-        .glow-text {
-            text-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon);
-        }
-        
-        .glow-text-blue {
-            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
-            color: var(--neon-blue);
-        }
-        
-        .glow-text-pink {
-            text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
-            color: var(--neon-pink);
-        }
-        
-        .glow-border {
-            box-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon);
-        }
-        
-        /* Retro Computer Terminal */
-        .terminal {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-blue), inset 0 0 10px var(--neon-blue);
-            padding: 20px;
-            font-family: 'VT323', monospace;
-            color: var(--neon-blue);
-            position: relative;
-        }
-        
-        .terminal::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 25px;
-            background: linear-gradient(to bottom, var(--neon-blue) 0%, transparent 100%);
-            opacity: 0.2;
-        }
-        
-        .terminal-header {
-            border-bottom: 1px solid var(--neon-blue);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .terminal-buttons {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .terminal-button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--neon-pink);
-            box-shadow: 0 0 5px var(--neon-pink);
-        }
-        
-        .terminal-button:nth-child(2) {
-            background-color: var(--neon-blue);
-            box-shadow: 0 0 5px var(--neon-blue);
-        }
-        
-        .terminal-button:nth-child(3) {
-            background-color: var(--neon-purple);
-            box-shadow: 0 0 5px var(--neon-purple);
-        }
-        
-        .terminal-content {
-            line-height: 1.5;
-            letter-spacing: 1px;
-        }
-        
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            background-color: var(--neon-blue);
-            animation: blink 1s infinite;
-            vertical-align: middle;
-            margin-left: 5px;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        /* Character Cards */
-        .character-card {
-            border: 2px solid var(--neon-purple);
-            box-shadow: 0 0 15px var(--neon-purple);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .character-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 25px var(--neon-purple);
-        }
-        
-        .character-image {
-            height: 200px;
-            background-size: cover;
-            background-position: center top;
-            border-bottom: 2px solid var(--neon-purple);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .character-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--neon-purple) 0%, transparent 100%);
-            opacity: 0.3;
-            z-index: 1;
-        }
-        
-        .character-icon {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* 80s Tech Icons */
-        .tech-icon {
-            width: 80px;
-            height: 80px;
-            background-color: rgba(30, 27, 75, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-blue);
-            transition: all 0.3s ease;
-        }
-        
-        .tech-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px var(--neon-blue);
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes glowPulse {
-            0% { text-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon); }
-            50% { text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon), 0 0 30px var(--neon); }
-            100% { text-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon); }
-        }
-        
-        @keyframes glowPulseBlue {
-            0% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
-            50% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue); }
-            100% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
-        }
-        
-        @keyframes glowPulsePink {
-            0% { text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); }
-            50% { text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 30px var(--neon-pink); }
-            100% { text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); }
-        }
-        
-        .animate-fade-in {
-            animation: fadeIn 1s ease forwards;
-        }
-        
-        .animate-glow {
-            animation: glowPulse 2s infinite;
-        }
-        
-        .animate-glow-blue {
-            animation: glowPulseBlue 2s infinite;
-        }
-        
-        .animate-glow-pink {
-            animation: glowPulsePink 2s infinite;
-        }
-        
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-500 { animation-delay: 0.5s; }
-        
-        /* Book display */
-        .book-display {
-            perspective: 1000px;
-        }
-        
-        .book-container {
-            transform-style: preserve-3d;
-            transform: rotateY(-15deg);
-            transition: transform 0.5s ease;
-        }
-        
-        .book-container:hover {
-            transform: rotateY(0);
-        }
-        
-        .book-cover {
-            box-shadow: 0 0 20px rgba(192, 38, 211, 0.7);
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f0f1a;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--secondary);
-            border-radius: 5px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
-        
-        /* VHS Tape Design */
-        .vhs-tape {
-            background-color: #111;
-            border: 2px solid var(--neon-pink);
-            box-shadow: 0 0 15px var(--neon-pink);
-            padding: 20px;
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .vhs-tape:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px var(--neon-pink);
-        }
-        
-        .vhs-label {
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #ddd;
-            transform: rotate(-2deg);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .vhs-label::after {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            border: 1px dashed #999;
-            z-index: 1;
-        }
-        
-        .vhs-title {
-            font-family: 'VT323', monospace;
-            color: #111;
-            font-size: 1.5rem;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-        
-        .vhs-subtitle {
-            font-family: 'Courier New', monospace;
-            color: #333;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-        
-        .vhs-reels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        
-        .vhs-reel {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 3px solid #333;
-            position: relative;
-        }
-        
-        .vhs-reel::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 15px;
-            height: 15px;
-            background-color: #333;
-            border-radius: 50%;
-        }
-        
-        /* Retro TV Frame */
-        .retro-tv {
-            background-color: #222;
-            border-radius: 10px;
-            padding: 20px;
-            border: 15px solid #111;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-            position: relative;
-        }
-        
-        .retro-tv::before {
-            content: '';
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 15px;
-            background-color: #111;
-            border-radius: 5px 5px 0 0;
-        }
-        
-        .retro-tv::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 10%;
-            right: 10%;
-            height: 10px;
-            background-color: #111;
-            border-radius: 0 0 50% 50%;
-        }
-        
-        .tv-screen {
-            background-color: #000;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .tv-static {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.05;
-            pointer-events: none;
-        }
-        
-        .tv-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .tv-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .tv-knob {
-            width: 20px;
-            height: 20px;
-            background-color: #555;
-            border-radius: 50%;
-            border: 2px solid #333;
-        }
-        
-        /* Cassette Tape */
-        .cassette {
-            width: 300px;
-            height: 180px;
-            background-color: #222;
-            border-radius: 10px;
-            padding: 15px;
-            position: relative;
-            margin: 0 auto;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .cassette:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px rgba(192, 38, 211, 0.7);
-        }
-        
-        .cassette-inner {
-            background-color: #444;
-            height: 100%;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 10px;
-        }
-        
-        .cassette-label {
-            background-color: white;
-            height: 40%;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'VT323', monospace;
-            color: black;
-            text-align: center;
-            padding: 5px;
-        }
-        
-        .cassette-reels {
-            display: flex;
-            justify-content: space-between;
-            padding: 0 30px;
-        }
-        
-        .cassette-reel {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid #222;
-            background-color: #333;
-            position: relative;
-        }
-        
-        .cassette-reel::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
-            background-color: #222;
-            border-radius: 50%;
-        }
-        
-        .cassette-windows {
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-        
-        .cassette-window {
-            width: 80px;
-            height: 30px;
-            background-color: #111;
-            border-radius: 3px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cassette-tape {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            background-color: #333;
-            border-radius: 2px;
-        }
-        
-        /* Character gradients */
-        .robbie-gradient {
-            background: linear-gradient(135deg, #3b0764 0%, #7e22ce 100%);
-        }
-        
-        .shelby-gradient {
-            background: linear-gradient(135deg, #831843 0%, #be185d 100%);
-        }
-        
-        .cassie-gradient {
-            background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%);
-        }
-        
-        .ben-gradient {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            --term-green: #4ade80; 
+            --term-amber: #fbbf24;
+            
+            /* The "Slate/Faded Blue" Palette */
+            --bg-darker: #020617;  
+            --bg-dark: #0f172a;    
+            --win-bg: #1e293b;     
+            --win-header: #334155; 
+            --win-border: #475569; 
         }
 
-        /* Mobile Menu */
-        .mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%);
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: var(--bg-darker);
+            font-family: 'VT323', monospace;
+            user-select: none;
+            color: var(--term-green);
+            -webkit-font-smoothing: antialiased;
         }
-        .mobile-menu.open {
-            transform: translateX(0);
+
+        /* --- CRT Effects --- */
+        .bloom-amber { text-shadow: 0 0 5px rgba(251, 191, 36, 0.7); }
+        .bloom-green { text-shadow: 0 0 5px rgba(74, 222, 128, 0.7); }
+        .bloom-blue { text-shadow: 0 0 5px rgba(59, 130, 246, 0.7); }
+        .bloom-red { text-shadow: 0 0 5px rgba(239, 68, 68, 0.7); }
+        .bloom-white { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+        
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.3; 
         }
+
+        .screen-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            box-shadow: inset 0 0 150px rgba(15, 23, 42, 0.6);
+            background: radial-gradient(circle, rgba(30, 41, 59, 0.0) 0%, rgba(2, 6, 23, 0.6) 90%);
+            pointer-events: none;
+            z-index: 998;
+        }
+
+        /* --- UI Elements --- */
+        ::-webkit-scrollbar { width: 10px; background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--win-border); border: 1px solid var(--bg-dark); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--term-green); }
+
+        .raetron-window {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1), 0 0 15px rgba(30, 41, 59, 0.5);
+            border: 1px solid var(--win-border);
+            background: var(--win-bg);
+        }
+
+        .raetron-title-bar {
+            background: var(--win-header);
+            color: #cbd5e1; /* Slate 300 */
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--win-border);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* --- Animations & Glitch --- */
+        .blink { animation: blinker 1s steps(2, start) infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        .glitch { position: relative; }
+        .glitch::before, .glitch::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
+        }
+        .glitch::before {
+            left: 2px; text-shadow: -2px 0 #ff00c1; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px; text-shadow: -2px 0 #00fff9; clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            animation: glitch-anim2 2s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip-path: inset(10% 0 80% 0); } 100% { clip-path: inset(20% 0 70% 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip-path: inset(60% 0 20% 0); } 100% { clip-path: inset(70% 0 20% 0); }
+        }
+
+        /* Typography Utilities */
+        .font-title { font-family: 'Orbitron', sans-serif; }
+        .font-ui { font-family: 'Share Tech Mono', monospace; }
+        .font-doc { font-family: 'Courier Prime', monospace; }
+        .font-term { font-family: 'VT323', monospace; }
     </style>
 </head>
 <body>
-    <!-- Scanlines Effect -->
-    <div class="scanlines"></div>
-    
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full bg-opacity-80 bg-gray-900 backdrop-blur-md shadow-lg z-50 py-4">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-3">
-                <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/fb781345-55f1-4065-b6aa-ecae0bbb8169_rwc_0x0x280x280x4096.png?h=e9020f74f2cc9f28c84e59d74e68e957" alt="Lily Rosslyn Logo" class="h-10 w-10">
-                <span class="text-2xl font-bold text-white">Lily Rosslyn</span>
-            </a>
-            
-            <!-- Desktop Navigation -->
-            <div class="hidden md:flex space-x-8">
-                <a href="#overview" class="nav-link text-gray-300 hover:text-white">Overview</a>
-                <a href="#characters" class="nav-link text-gray-300 hover:text-white">Characters</a>
-                <a href="#setting" class="nav-link text-gray-300 hover:text-white">1986 Setting</a>
-                <a href="#excerpts" class="nav-link text-gray-300 hover:text-white">Excerpts</a>
-                <a href="#arc" class="nav-link text-gray-300 hover:text-white">ARC Reader</a>
-                <a href="index.html" class="nav-link text-gray-300 hover:text-white">Main Site</a>
-            </div>
-            
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-        
-    </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-gray-900 bg-opacity-95 backdrop-blur-lg z-40 md:hidden">
-            <div class="container mx-auto px-4 py-6 flex flex-col space-y-6 pt-20">
-                <a href="#overview" class="text-xl text-gray-300 hover:text-white py-2">Overview</a>
-                <a href="#characters" class="text-xl text-gray-300 hover:text-white py-2">Characters</a>
-                <a href="#setting" class="text-xl text-gray-300 hover:text-white py-2">1986 Setting</a>
-                <a href="#excerpts" class="text-xl text-gray-300 hover:text-white py-2">Excerpts</a>
-                <a href="#arc" class="text-xl text-gray-300 hover:text-white py-2">ARC Reader</a>
-                <a href="index.html" class="text-xl text-gray-300 hover:text-white py-2">Main Site</a>
-            </div>
-        </div>
+    <div id="root"></div>
 
-    <!-- Hero Section -->
-    <section class="grid-bg min-h-screen flex items-center justify-center text-white relative overflow-hidden pt-20">
-        <!-- Retro Sun -->
-        <div class="retro-sun"></div>
-        
-        <div class="container mx-auto px-4 text-center relative z-10 py-20">
-            <div class="mb-8 opacity-0 animate-fade-in">
-                <h1 class="text-6xl md:text-8xl font-bold mb-4 glow-text-blue animate-glow-blue">THE PROJECT</h1>
-                <p class="text-xl md:text-2xl retro-text glow-text-pink animate-glow-pink">A SUPERNATURAL THRILLER BY LILY ROSSLYN</p>
-            </div>
-            
-            <div class="max-w-4xl mx-auto mb-12 opacity-0 animate-fade-in delay-200">
-                <div class="terminal">
-                    <div class="terminal-header">
-                        <span class="retro-text">SYSTEM.EXE</span>
-                        <div class="terminal-buttons">
-                            <div class="terminal-button"></div>
-                            <div class="terminal-button"></div>
-                            <div class="terminal-button"></div>
-                        </div>
-                    </div>
-                    <div class="terminal-content">
-                        <p>> LOADING VIRTUAL REALITY SIMULATION...</p>
-                        <p>> WARNING: UNAUTHORIZED ACCESS DETECTED</p>
-                        <p>> DIMENSIONAL BREACH IMMINENT</p>
-                        <p>> SYSTEM FAILURE: GATEWAY OPENING</p>
-                        <p>> RUN WHILE YOU STILL CAN<span class="cursor"></span></p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row justify-center gap-6 opacity-0 animate-fade-in delay-300">
-                <a href="#overview" class="btn-neon px-8 py-3 rounded-full text-lg font-medium uppercase tracking-wider">Enter The Project</a>
-                <a href="#arc" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Become an ARC Reader</a>
-            </div>
-        </div>
-    </section>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-    <!-- Overview Section -->
-    <section id="overview" class="py-20 relative">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-12 text-center glow-text-blue animate-glow-blue">
-                The Story
-            </h2>
-            
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
-                <div class="lg:w-1/2 order-2 lg:order-1">
-                    <div class="card p-8 rounded-lg">
-                        <h3 class="text-2xl font-bold mb-6 text-purple-300">A Gateway to Darkness</h3>
-                        <p class="text-lg mb-6 leading-relaxed">
-                            It's 1986, and virtual reality is emerging as the tech of the future. When high schooler Robbie stumbles upon a VR exhibit at the local mall, he gets an idea for the upcoming school science fair - what if he and his friends could build their own virtual world?
-                        </p>
-                        <p class="text-lg mb-6 leading-relaxed">
-                            Robbie pulls together a ragtag crew of fellow classmates for the ambitious project, each contributing their own skills.
-                        </p>
-                        <p class="text-lg mb-6 leading-relaxed">
-                            Together, the unlikely team constructs a rudimentary VR simulation that exceeds their wildest expectations. But their excitement turns to terror when a cryptic glitch reveals their invention has also opened a gateway to sinister alternate dimensions hidden beneath reality.
-                        </p>
-                        <p class="text-lg mb-6 leading-relaxed">
-                            As demonic creatures begin to creep into their world, Robbie realizes they've unleashed powers far beyond their control. An ominous corporation seeks to exploit the weakened boundaries between worlds for profit and power.
-                        </p>
-                        <p class="text-lg mb-6 leading-relaxed">
-                            With time running out, Robbie's crew must venture into the creeping darkness themselves to undo the damage. Friendships are tested and relationships strained to the breaking point as they race to overcome their greatest challenge yet. Can they repair the fraying fabric of reality before all is consumed by the gathering shadows?
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="lg:w-1/2 order-1 lg:order-2">
-                    <div class="retro-tv">
-                        <div class="tv-screen">
-                            <div class="tv-static"></div>
-                            <div class="tv-content">
-                                <div class="book-display flex justify-center">
-                                    <div class="book-container">
-                                        <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/a5ee9a7f-808f-4cd7-a522-a0fe1b6d06cf_rw_1920.jpg?h=e12efcb6c0d14eb797eb03d76d33621f" alt="The Project Book Cover" class="book-cover rounded-lg max-w-full h-auto shadow-2xl" style="max-height: 500px;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tv-controls">
-                            <div class="tv-knob"></div>
-                            <div class="tv-knob"></div>
-                            <div class="tv-knob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-16 flex justify-center">
-                <a href="https://www.youtube.com/watch?v=0q-Zd-MH-NY" target="_blank" class="btn-neon px-8 py-3 rounded-full text-lg font-medium uppercase tracking-wider flex items-center gap-2">
-                    <i class="fas fa-play-circle"></i> Watch Book Trailer
-                </a>
-            </div>
-        </div>
-    </section>
+        // --- DATA ---
+        // FIXED: Using backticks (`) for multi-line text to prevent syntax errors
+        const STORY_CHAPTERS = [
+            { 
+                id: 0, 
+                title: "FILE_00: PROJECT_SUMMARY.TXT", 
+                text: `CLASSIFIED SUMMARY // CLEARANCE LEVEL 1
 
-    <!-- Dive Deeper Section -->
-    <section id="dive-deeper" class="py-20 bg-gray-900 bg-opacity-30">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-12 text-center glow-text animate-glow">Dive Deeper</h2>
-            <div class="flex flex-col md:flex-row gap-8 justify-center">
-                <!-- VHS Tape -->
-                <div class="md:w-1/2 lg:w-1/3">
-                    <a href="https://lilyrosslyn.notion.site/The-Project-f8b5b7f5c81b4b0fb7bb4c9e3c1cab3c" target="_blank" class="block">
-                        <div class="vhs-tape rounded-lg">
-                            <div class="vhs-label">
-                                <div class="vhs-title">THE PROJECT</div>
-                                <div class="vhs-subtitle">FULL SYNOPSIS - 1986</div>
-                            </div>
-                            <div class="vhs-reels">
-                                <div class="vhs-reel"></div>
-                                <div class="vhs-reel"></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <!-- Cassette Tape -->
-                <div class="md:w-1/2 lg:w-1/3">
-                    <a href="https://lilyrosslyn.notion.site/The-Project-OST-1f6cb41c48d380e2929fdcf47c8bbfad" target="_blank" class="block">
-                        <div class="cassette">
-                            <div class="cassette-inner">
-                                <div class="cassette-windows">
-                                    <div class="cassette-window">
-                                        <div class="cassette-tape"></div>
-                                    </div>
-                                    <div class="cassette-window">
-                                        <div class="cassette-tape"></div>
-                                    </div>
-                                </div>
-                                <div class="cassette-label">
-                                    <div>
-                                        <div class="text-lg font-bold">THE PROJECT</div>
-                                        <div class="text-sm">SOUNDTRACK</div>
-                                    </div>
-                                </div>
-                                <div class="cassette-reels">
-                                    <div class="cassette-reel"></div>
-                                    <div class="cassette-reel"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+YEAR: 1986
+LOCATION: Queens Village, NY
 
-    <!-- Characters Section -->
-    <section id="characters" class="py-20 relative">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-12 text-center glow-text-pink animate-glow-pink">Meet The Characters</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Robbie -->
-                <div class="character-card rounded-lg overflow-hidden">
-                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3A11570c2d-d640-4790-b549-586b6de36c36%3Atmphbaazqlz_1.jpg?table=block&id=1f6cb41c-48d3-8051-8ddf-f5257e6f5d53&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center;">
-                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Robbie Kingsley</h3>
-                        <p class="text-gray-300 mb-4">Behind his quiet determination lies a brilliant mind shadowed by the ghosts of past failures. As he leads the team in their ambitious VR project, Robbie must confront his deepest fears while fighting to prove that one mistake doesn't define a destiny. But will his desperate drive for redemption blind him to the dangers that lie ahead?</p>
-                        <div class="flex items-center text-sm text-gray-400">
-                            <span class="mr-3"><i class="fas fa-brain mr-1"></i> Tech Genius</span>
-                            <span><i class="fas fa-users mr-1"></i> Leader</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Cassie -->
-                <div class="character-card rounded-lg overflow-hidden">
-                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3Aef6b9779-aa2f-48af-8498-4d8f297d7708%3Atmpfq1ok2hi.jpg?table=block&id=1f6cb41c-48d3-8046-a2ba-e3278098b937&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center 30%;">
-                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Cassie Simmons</h3>
-                        <p class="text-gray-300 mb-4">Queen bee by day, scientific prodigy by night. Cassie masterfully juggles two worlds - ruling the school hallways while harboring a brilliant mind for physics that could change everything. As the walls between her double life begin to crack, she'll have to decide which version of herself she truly wants to be.</p>
-                        <div class="flex items-center text-sm text-gray-400">
-                            <span class="mr-3"><i class="fas fa-flask mr-1"></i> Physics Genius</span>
-                            <span><i class="fas fa-crown mr-1"></i> Popular</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Ben -->
-                <div class="character-card rounded-lg overflow-hidden">
-                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3Ade29d5c0-dd80-421b-b777-8dbf9ae429df%3Atmp9kwiycqv.jpg?table=block&id=1f6cb41c-48d3-8030-ab8d-f81cb45d020d&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center;">
-                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Ben Zhang</h3>
-                        <p class="text-gray-300 mb-4">With programming skills that could rival Silicon Valley's finest, Ben navigates between family expectations and technological dreams. His unique perspective on justice becomes vital as the team ventures into morally murky waters - but will his principles survive when everything is at stake?</p>
-                        <div class="flex items-center text-sm text-gray-400">
-                            <span class="mr-3"><i class="fas fa-code mr-1"></i> Programmer</span>
-                            <span><i class="fas fa-balance-scale mr-1"></i> Principled</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Shelby -->
-                <div class="character-card rounded-lg overflow-hidden">
-                    <div class="character-image" style="background-image: url('https://lilyrosslyn.notion.site/image/attachment%3A2a591539-fc1f-4531-88c6-c1691725e225%3Atmpzxksfvzk.jpg?table=block&id=1f6cb41c-48d3-80b7-9a3c-dc0082fa8baa&spaceId=55d9e2f1-c27b-4205-9e71-ad4d84fc4d5e&width=480&userId=&cache=v2'); background-size: cover; background-position: center;">
-                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2 text-purple-300">Shelby DiMario</h3>
-                        <p class="text-gray-300 mb-4">Don't let her rebellious exterior fool you - behind the anti-establishment attitude lurks one of the most skilled hackers you'll never see coming. As Shelby's technical prowess becomes crucial to the team's survival, she must reconcile her drive to disrupt the system with her growing power to change it from within.</p>
-                        <div class="flex items-center text-sm text-gray-400">
-                            <span class="mr-3"><i class="fas fa-laptop-code mr-1"></i> Hacker</span>
-                            <span><i class="fas fa-spray-can mr-1"></i> Rebel</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+SUBJECT: THE RAE-TRON INCIDENT
 
-    <!-- 1986 Setting Section -->
-    <section id="setting" class="py-20 bg-gray-900 bg-opacity-30">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-12 text-center glow-text animate-glow">Welcome to 1986</h2>
-            
-            <div class="card p-8 rounded-lg mb-12">
-                <h3 class="text-2xl font-bold mb-6 text-purple-300">The Dawn of Virtual Reality</h3>
-                <p class="text-lg mb-6 leading-relaxed">
-                    "The Project" takes place in 1986, a pivotal time when virtual reality was just emerging as a concept. The story captures the excitement and wonder of this technological frontier, when the possibilities seemed endless and the dangers unknown.
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                <!-- 80s Tech Icons -->
-                <div class="flex flex-col items-center">
-                    <div class="tech-icon mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-2 text-purple-300">Early Computers</h4>
-                    <p class="text-center text-gray-300">Commodore 64s and early IBM PCs were the cutting edge of home computing</p>
-                </div>
-                
-                <div class="flex flex-col items-center">
-                    <div class="tech-icon mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-2 text-purple-300">VHS Tapes</h4>
-                    <p class="text-center text-gray-300">The primary way to watch movies at home and record television</p>
-                </div>
-                
-                <div class="flex flex-col items-center">
-                    <div class="tech-icon mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                        </svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-2 text-purple-300">Walkmans</h4>
-                    <p class="text-center text-gray-300">Portable cassette players that revolutionized how people listened to music</p>
-                </div>
-                
-                <div class="flex flex-col items-center">
-                    <div class="tech-icon mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-2 text-purple-300">Arcade Games</h4>
-                    <p class="text-center text-gray-300">The mall arcade was the social hub for teens and gaming enthusiasts</p>
-                </div>
-            </div>
-            
-            <div class="mt-12 card p-8 rounded-lg">
-                <h3 class="text-2xl font-bold mb-6 text-purple-300">Cultural Touchpoints</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-xl font-bold mb-2 text-purple-200">Movies & TV</h4>
-                        <ul class="list-disc pl-6 text-gray-300 space-y-1">
-                            <li>Back to the Future</li>
-                            <li>The Goonies</li>
-                            <li>Aliens</li>
-                            <li>Top Gun</li>
-                            <li>Ferris Bueller's Day Off</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-xl font-bold mb-2 text-purple-200">Music</h4>
-                        <ul class="list-disc pl-6 text-gray-300 space-y-1">
-                            <li>Madonna</li>
-                            <li>Michael Jackson</li>
-                            <li>Whitney Houston</li>
-                            <li>Bon Jovi</li>
-                            <li>The Cure</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+Robbie Kingsley didn't care about scientific breakthroughs. He just wanted the $5,000 Grand Prize from the RAEtron Science Fair to buy a pair of green suede Vans and redeem his reputation.
 
-    <!-- Excerpts Section -->
-    <section id="excerpts" class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-12 text-center glow-text-pink animate-glow-pink">Story Excerpts</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <!-- Excerpt 1 -->
-                <div class="card p-8 rounded-lg">
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Discovery</h3>
-                        <div class="w-16 h-1 bg-purple-500"></div>
-                    </div>
-                    <p class="text-lg mb-4 leading-relaxed italic">
-                        "Before Robbie knew it, he was suddenly plunged into darkness, then a pixilated landscape began taking shape before his eyes. He stood atop a mountain ridge with it's depths receding into the distance. He raised his gloved hands and saw them before him, but they weren't really his hands. The motion was delayed and seemed detached from his body. He took a few tentative steps. Robbie was amazed; he had no idea that this was possible."
-                    </p>
-                </div>
-                
-                <!-- Excerpt 2 -->
-                <div class="card p-8 rounded-lg">
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Glitch</h3>
-                        <div class="w-16 h-1 bg-purple-500"></div>
-                    </div>
-                    <p class="text-lg mb-4 leading-relaxed italic">
-                        "As Jay took another step forward, he noticed flashes of images. It was like he was actually at school for a moment. More flashes that looked like snapshots of the school hallway. Jay wasn't aware of any technology that could make a 3D world look this real."
-                    </p>
-                </div>
-                
-                <!-- Excerpt 3 -->
-                <div class="card p-8 rounded-lg">
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Warning</h3>
-                        <div class="w-16 h-1 bg-purple-500"></div>
-                    </div>
-                    <p class="text-lg mb-4 leading-relaxed italic">
-                        "As he made his exit through the mesmerized throngs still swarming the platform, an elderly man in an old brown coat appeared before him. 'Enjoy it while you can, son. The rabbit hole will eventually swallow you.' he warned in a gravelly voice but before Robbie could respond, the old man disappeared into the crowd. Robbie felt puzzled and confused. What did that even mean? The strange words were unsettling."
-                    </p>
-                </div>
-                
-                <!-- Excerpt 4 -->
-                <div class="card p-8 rounded-lg">
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold mb-4 text-purple-300">The Confrontation</h3>
-                        <div class="w-16 h-1 bg-purple-500"></div>
-                    </div>
-                    <p class="text-lg mb-4 leading-relaxed italic">
-                        "Ben rolled his eyes before staring him down, 'Really, Robbie? You take one karate lesson and you think you are Chuck Norris?'
-                        <br><br>
-                        'No, Chuck Norris, thinks he's me.' Robbie said, as he and Josie chuckled but they trailed off when they saw movement in the trees ahead of them."
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+To win, he recruited a team of local outcasts ("The Misfits") to attempt the impossible: construct a fully immersive Virtual Reality system in Cassandra Simmons' basement, utilizing the cryptic schematics and dormant mainframe left behind by a vanished scientist, Dr. Alexander Stevens.
 
-    <!-- ARC Reader Section -->
-    <section id="arc" class="py-20 bg-gray-900 bg-opacity-30">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-12 text-center glow-text-blue animate-glow-blue">Become an ARC Reader</h2>
-            
-            <div class="max-w-4xl mx-auto">
-                <div class="card p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold mb-6 text-purple-300">Read "The Project" Before Anyone Else</h3>
-                    <p class="text-lg mb-6 leading-relaxed">
-                        Want to be among the first to experience this supernatural thriller set in the vibrant world of 1986? Join my Advanced Reader Copy (ARC) team and help shape the final version of "The Project" with your valuable feedback.
-                    </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <div>
-                            <h4 class="text-xl font-bold mb-4 text-purple-200">As an ARC reader, you'll:</h4>
-                            <ul class="list-disc pl-6 text-gray-300 space-y-3">
-                                <li>Get free advance access to "The Project"</li>
-                                <li>Provide feedback that helps shape the final book</li>
-                                <li>Be acknowledged in the published version</li>
-                                <li>Join a community of like-minded readers</li>
-                                <li>Get insider information about future stories</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 class="text-xl font-bold mb-4 text-purple-200">What we're looking for:</h4>
-                            <ul class="list-disc pl-6 text-gray-300 space-y-3">
-                                <li>Readers who enjoy supernatural thrillers</li>
-                                <li>Fans of 80s nostalgia and retro tech</li>
-                                <li>People interested in stories that explore faith and the supernatural</li>
-                                <li>Honest feedback to help make the story stronger</li>
-                                <li>Willingness to leave a review when the book launches</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-center mt-8">
-                        <a href="https://lilyrosslyn.notion.site/1a9cb41c48d380f28a9fe59af8683d67?pvs=105" target="_blank" class="btn-primary px-8 py-4 rounded-lg text-center text-lg">Apply to be an ARC Reader</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-<!-- START SIGNUP FORM SECTION -->
-<section id="connect" class="py-20 grid-bg relative">
-    <style>
-        /* Styles specific to the signup form component */
-        .signup-container { max-width: 700px; margin: 0 auto; }
-        .signup-logo { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 900; letter-spacing: 0.1em; color: #e6edf3; }
-        .signup-atomic-symbol { display: inline-block; width: 1em; height: 1em; position: relative; top: 0.1em; color: #ff00c1; filter: drop-shadow(0 0 5px #ff00c1); }
-        .signup-headline { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: clamp(1.25rem, 5vw, 1.75rem); position: relative; }
-        .glitch { position: relative; color: #e6edf3; text-shadow: 0 0 2px rgba(230, 237, 243, 0.5); }
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #0f0f1a; /* Match body background */
-            overflow: hidden;
-        }
-        .glitch::before { left: 2px; text-shadow: -1px 0 #ff00c1; animation: glitch-anim-1 2s infinite linear alternate-reverse; }
-        .glitch::after { left: -2px; text-shadow: -1px 0 #00ffff; animation: glitch-anim-2 2s infinite linear alternate-reverse; }
-        @keyframes glitch-anim-1 { 0% { clip-path: inset(45% 0 50% 0); } 100% { clip-path: inset(5% 0 80% 0); } }
-        @keyframes glitch-anim-2 { 0% { clip-path: inset(60% 0 30% 0); } 100% { clip-path: inset(90% 0 5% 0); } }
-        .signup-subheadline { min-height: 2.5em; font-family: 'VT323', monospace; font-size: 1.25rem; color: #00ff00; white-space: pre-wrap; margin-bottom: 1.5rem; }
-        .signup-subheadline.typing::after { content: '_'; animation: cursor-blink-green 1s infinite; }
-        .terminal-box {
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.2);
-            padding: 1.5rem 2rem; text-align: left; background-color: #0D1117;
-        }
-        .terminal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid #00ff00;
-        }
-        .terminal-title, .terminal-status { font-family: 'VT323', monospace; font-size: 1.25rem; text-transform: uppercase; color: #00ff00; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-family: 'VT323', monospace; font-size: 1.25rem; color: #00ff00; }
-        .form-input {
-            width: 100%; background-color: #000; border: 1px solid #00ff00; color: #00ff00;
-            font-family: 'VT323', monospace; font-size: 1.25rem; padding: 0.75rem; box-sizing: border-box; text-align: center;
-        }
-        .form-input:focus { outline: none; box-shadow: 0 0 10px #00ff00; }
-        .submit-btn {
-            background-color: transparent; border: 2px solid #00ff00; color: #00ff00;
-            font-family: 'VT323', monospace; font-size: 1.5rem; padding: 0.75rem 1.5rem; margin-top: 1.5rem;
-            cursor: pointer; width: 100%; text-transform: uppercase; transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-        }
-        .submit-btn:hover { background-color: #00ff00; color: #0D1117; box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
-        .form-message { margin-top: 1rem; font-size: 1rem; height: 1.2rem; color: #00ff00; font-family: 'VT323', monospace; }
-        @keyframes cursor-blink-green { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-    </style>
-    <div class="container mx-auto px-4 relative z-10">
-        <div class="signup-container text-center">
-            <header class="mb-6">
-                <h1 class="signup-logo">
-                    THE PR<svg class="signup-atomic-symbol" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke-width="4" stroke="currentColor" fill="none"><circle cx="50" cy="50" r="8"></circle><ellipse transform="rotate(45 50 50)" cx="50" cy="50" rx="40" ry="15"></ellipse><ellipse transform="rotate(-45 50 50)" cx="50" cy="50" rx="40" ry="15"></ellipse><ellipse transform="rotate(90 50 50)" cx="50" cy="50" rx="40" ry="15"></ellipse></g></svg>JECT
-                </h1>
-            </header>
-            <main>
-                <section>
-                    <h2 class="signup-headline glitch mb-4" data-text="Something happened in '86. The truth is in the static.">
-                        Something happened in '86. The truth is in the static.
-                    </h2>
-                </section>
-                <section>
-                    <div class="terminal-box">
-                        <div class="terminal-header">
-                            <span class="terminal-title">CLASSIFIED_FILES.DAT</span>
-                            <span class="terminal-status">ACCESS_GRANTED</span>
-                        </div>
-                        <p class="signup-subheadline" id="signup-typewriter-text"></p>
-                        <form id="signup-form">
-                            <div class="form-group">
-                                <label for="signup-email">> ENTER YOUR EMAIL TO GAIN ACCESS:</label>
-                                <input type="email" id="signup-email" name="fields[email]" class="form-input" required autocomplete="email">
-                            </div>
-                            <button type="submit" class="submit-btn">EXECUTE</button>
-                            <p id="signup-form-message" class="form-message"></p>
-                        </form>
-                    </div>
-                </section>
-            </main>
-        </div>
-    </div>
-    <script>
-        // Self-contained script for the signup form
-        (function() {
-            const textElement = document.getElementById('signup-typewriter-text');
-            if (textElement) {
-                textElement.classList.add('typing');
-                const textToType = "Join the investigation. Get classified Project updates and exclusive story files.";
-                let i = 0;
-                function typeWriter() {
-                    if (i < textToType.length) {
-                        textElement.innerHTML += textToType.charAt(i);
-                        i++;
-                        setTimeout(typeWriter, 50);
-                    } else {
-                        textElement.classList.remove('typing');
-                    }
-                }
-                typeWriter();
+But they didn't realize that Stevens hadn't just designed a game engine. He had built a bridge.
+
+When the team powered up the prototype, they didn't just simulate a new world—they tore a hole in the fabric of this one. Now, the "glitches" aren't staying on the screen. Shadows are manifesting in the streets of Queens Village, and the code is bleeding into reality.
+
+CAUTION: The signal is active. Information contained herein is cognitively hazardous. Proceed at your own risk.
+
+> END SUMMARY` 
+            },
+            { id: 1, title: "CH_01: FROM VANS TO VIRTUAL", text: "Dust and debris formed layers in the abandoned basement research facility. A gust of fall air burst through the small, cracked window panel. A book flipped open, revealing the contents of its pages, which bore the work of the brilliant Dr. Alexander Stevens. It was clear that he followed in the footsteps of Ivan Sutherland, \"The Father of Virtual Reality\". But that was in 1965.\n\nOver twenty years later, Stevens’ work faded into obscurity as he vanished without a trace. He left only his legacy behind that was slowly overshadowed by newer advancements in technology. Yet none achieved the potential of his magnum opus. There in the shadowed corner sat the dormant traces of his HyperRealm Nexus, of which, like Dr. Stevens, was nowhere to be found.\n\nThe eerie quiet was displaced only by the sporadic crackling and buzzing sounds from old computer monitors. One monitor, like a sentinel, beckoned someone to uncover the laboratory's dark potential as a green cursor blinked to life on a black screen..." },
+            { id: 2, title: "CH_02: THE MISFITS", text: "Robbie found Ben in front of school the next morning before 1st period. He took a deep breath as he approached. He was a pro at donning his cool, charming facade; it had become second-nature to him, a protective shield against any fear or doubt that threatened to interrupt his latest plan.\n\n“So last night I stayed up, going over the schematics in my head,” Robbie said. He handed Ben, a dog-eared notebook, opened to a page with what looked like scribble. As Ben glanced at the page, a small ‘hmm’ escaped his lips.\n“What do you see?” Robbie asked curiously.\nBen slowly looked up and replied with a stoic look in his eyes, “Judging by all the necessary elements needed... I see that it's not reasonable to do this on our own.”" },
+            { id: 3, title: "CH_03: GLITCHES", text: "Vince Myers walked through the neighborhood park on a Saturday morning with his new friend Jimmy, an exceedingly popular Junior on the varsity football team. Jimmy had carefully built up a bad boy reputation and Vince was key in keeping up the appearance. They scanned for the target. Today’s agenda: The new kid who Jimmy thought could be trouble.\n\nRobbie and his friends strode into the park so that Josie could sketch out the landscape. They happened upon the scene that just took place with Vince and froze with uncertainty and caution..." }
+        ];
+
+        // ADD YOUR IMAGE PATHS HERE (e.g., 'images/Ben.jpg')
+        const CHARACTERS = [
+            { 
+                id: 1, 
+                name: "Robbie Kingsley", 
+                role: "PROJECT LEADER", 
+                stats: "STR:4 INT:7 CHA:8", 
+                desc: "Driven by redemption. Wants the green suede Vans. Haunted by failure.", 
+                status: "ACTIVE", 
+                img: "images/robbie.png"  // <--- Changed to .png
+            },
+            { 
+                id: 2, 
+                name: "Cassandra Simmons", 
+                role: "TECH SPECIALIST", 
+                stats: "STR:3 INT:9 CHA:9", 
+                desc: "Secret genius masking as popular. Her basement is Ground Zero.", 
+                status: "ACTIVE", 
+                img: "images/cassie.png" 
+            },
+            { 
+                id: 3, 
+                name: "Jayendra Chakrabarti", 
+                role: "VISUAL ANALYST", 
+                stats: "STR:2 INT:10 CHA:3", 
+                desc: "Technical wizard. Arrogant but essential. First to see anomalies.", 
+                status: "PERCEPTIVE", 
+                img: "images/jay.png" 
+            },
+            { 
+                id: 4, 
+                name: "Benjamin Zhang", 
+                role: "SYSTEMS ARCHITECT", 
+                stats: "STR:6 INT:6 CHA:7", 
+                desc: "Robbie's moral compass. Immigrant family background. Keeps the team grounded.", 
+                status: "ACTIVE", 
+                img: "images/ben.png" 
+            },
+            { 
+                id: 5, 
+                name: "Derek Rosemont", 
+                role: "AUDIO ANALYST", 
+                stats: "STR:5 INT:8 CHA:5", 
+                desc: "Sound engineer. His music triggers the dimensional rifts.", 
+                status: "SKEPTIC", 
+                img: "images/derek.png" 
+            },
+            { 
+                id: 6, 
+                name: "Josie Wilder", 
+                role: "INTEL SPECIALIST", 
+                stats: "STR:3 INT:7 CHA:4", 
+                desc: "Visualizer. Escaping a toxic home life through the VR world.", 
+                status: "OBSERVANT", 
+                img: "images/josie.png" 
+            },
+            { 
+                id: 7, 
+                name: "Vincent Myers", 
+                role: "SECURITY RISK", 
+                stats: "STR:9 INT:4 CHA:5", 
+                desc: "The bully with a hidden conscience. Caught between survival and redemption.", 
+                status: "MONITORED", 
+                img: "images/vince.png" 
+            },
+            { 
+                id: 8, 
+                name: "Shelby DiMario", 
+                role: "STREET OPERATIVE", 
+                stats: "STR:6 INT:5 CHA:8", 
+                desc: "Rebellious spirit. Knows the streets better than anyone.", 
+                status: "REBELLIOUS", 
+                img: "images/shelby.png" 
             }
+        ];
+        const DEEP_DIVES = [
+            { id: 1, title: "STRANGE SCIENCE", label: "QUANTUM ENTANGLEMENT", content: "THEORY:\nThe VR system creates conditions that allow quantum mechanical effects to manifest in the real world. By utilizing specific sound frequencies (cymatics) and electromagnetic forces, the system achieves 'Quantum Coherence' over macro scales.\n\nSWIMMING POOL ANALOGY:\nImagine reality as two overlapping swimming pools. The VR system acts like a drill creating holes between them, allowing water (particles) to flow between and blend the two pools." },
+            { id: 2, title: "HYPERREALM NEXUS", label: "CLASSIFIED: DR. STEVENS", content: "SUBJECT: DR. ALEXANDER STEVENS (1965)\nSTATUS: MISSING / ERASED\n\nDr. Stevens followed in the footsteps of Ivan Sutherland ('The Father of VR'). Over 20 years ago, he built the original 'HyperRealm Nexus' in the very basement Cassie now uses.\n\nTHE GLITCH:\nThe kids did not invent the gateway; they *reactivated* it." },
+            { id: 3, title: "SHADOW BEASTS", label: "THREAT LEVEL: EXTREME", content: "SUBJECT: NON-ENTROPIC ENTITIES ('SHADOWS')\nORIGIN: EXTRA-DIMENSIONAL\n\nThese entities are composed of 'incoherent matter.' They are attracted to the order and structure of our reality.\n\nOBSERVATIONS:\n- First sighted in school hallways.\n- Manifest as flickering silhouettes.\n- Respond to emotional states and fear." }
+        ];
 
-            const form = document.getElementById('signup-form');
-            const formMessage = document.getElementById('signup-form-message');
-
-            if (form) {
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    formMessage.textContent = 'Connecting to the mainframe...';
-                    const mailerLiteActionUrl = 'https://assets.mailerlite.com/jsonp/1804898/forms/165903246149289160/subscribe';
-                    const formData = new FormData(form);
-
-                    fetch(mailerLiteActionUrl, {
-                        method: 'POST',
-                        body: formData,
-                        mode: 'no-cors'
-                    })
-                    .then(() => {
-                        formMessage.textContent = 'Connection successful. Redirecting...';
-                        // Redirect to your confirmation page
-                        window.location.href = 'confirmation.html';
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        formMessage.textContent = 'Connection failed. Please try again.';
-                    });
-                });
-            }
-        })();
-    </script>
-</section>
-<!-- END SIGNUP FORM SECTION -->
-
-    <!-- Call to Action -->
-    <section class="py-20 grid-bg relative">
-        <div class="retro-sun"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-6 glow-text-blue animate-glow-blue">Ready to Enter "The Project"?</h2>
-                <p class="text-xl mb-8">Join Robbie and his friends as they navigate the dangerous intersection of technology, faith, and the supernatural in this thrilling story set in 1986.</p>
-                
-                <div class="flex flex-col md:flex-row justify-center gap-6">
-                    <a href="https://lilyrosslyn.notion.site/1a9cb41c48d380f28a9fe59af8683d67?pvs=105" target="_blank" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Become an ARC Reader</a>
-                    <a href="https://www.patreon.com/c/LilyRosslyn" target="_blank" class="btn-secondary px-8 py-3 rounded-full text-lg font-medium">Join Patreon for Early Access</a>
-                    <a href="https://www.youtube.com/watch?v=0q-Zd-MH-NY" target="_blank" class="btn-neon px-8 py-3 rounded-full text-lg font-medium">Watch Book Trailer</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 relative">
-        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent pointer-events-none"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0 flex items-center space-x-4">
-                    <img src="https://cdn.myportfolio.com/4de5520d-111d-4480-a2d5-5f9e35dfa109/fb781345-55f1-4065-b6aa-ecae0bbb8169_rwc_0x0x280x280x4096.png?h=e9020f74f2cc9f28c84e59d74e68e957" alt="Lily Rosslyn Logo" class="h-10 w-10">
-                    <div>
-                        <h2 class="text-2xl font-bold mb-1">Lily Rosslyn</h2>
-                        <p class="text-gray-400">Christian YA Supernatural Author</p>
-                    </div>
-                </div>
-                
-                <div class="flex space-x-6">
-                    <a href="https://www.instagram.com/lily_rosslyn/" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/@LilyRosslyn" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.patreon.com/c/LilyRosslyn" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-patreon"></i></a>
-                    <a href="https://discord.gg/Czrk9D8f9U" target="_blank" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fab fa-discord"></i></a>
-                    <a href="mailto:hello@lilyrosslyn.com" class="social-icon text-xl text-gray-400 hover:text-white"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2023 Lily Rosslyn. All rights reserved.</p>
-                <p class="mt-2"><a href="index.html" class="hover:text-white">Return to Main Site</a></p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-        });
-        
-        // Close mobile menu when clicking a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
-            });
-        });
-        
-        // Animate elements when they come into view
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
+        // --- SVGs ---
+        const Icons = {
+            Terminal: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>,
+            Disk: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M12 4v6h6"></path><path d="M4 20v-6h16v6"></path></svg>,
+            Mail: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>,
+            Folder: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>,
+            User: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>,
+            Tie: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><path d="M3 6h18"></path><path d="M12 6v16"></path></svg>,
+            Database: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>,
+            Minimize: () => <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="18" width="20" height="2" /></svg>,
+            Close: () => <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><line x1="2" y1="2" x2="22" y2="22" /><line x1="22" y1="2" x2="2" y2="22" /></svg>,
+            Start: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="8" height="8"/><rect x="14" y="2" width="8" height="8"/><rect x="2" y="14" width="8" height="8"/><rect x="14" y="14" width="8" height="8"/></svg>
         };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                    observer.unobserve(entry.target);
+
+        // --- Components ---
+
+        const DraggableWindow = ({ id, title, isOpen, isMinimized, zIndex, position, content, onClose, onMinimize, onFocus, onMove }) => {
+            const [isDragging, setIsDragging] = useState(false);
+            const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+            const windowRef = useRef(null);
+
+            const handleMouseDown = (e) => {
+                onFocus(id);
+                setIsDragging(true);
+                if (windowRef.current) {
+                    const rect = windowRef.current.getBoundingClientRect();
+                    setDragOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
                 }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('h2:not(.animate-glow):not(.animate-glow-blue):not(.animate-glow-pink), h3, .card, .character-card, .tech-icon, .vhs-tape, .cassette').forEach(element => {
-            if (!element.classList.contains('animate-glow') && 
-                !element.classList.contains('animate-glow-blue') && 
-                !element.classList.contains('animate-glow-pink')) {
-                element.style.opacity = '0';
-                observer.observe(element);
-            }
-        });
-        
-        // Terminal typing effect
-        function typeWriter(element, text, i = 0, speed = 50) {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(() => typeWriter(element, text, i, speed), speed);
-            }
-        }
-        
-        // Simulate typing in terminal on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            const terminalLines = document.querySelectorAll('.terminal-content p');
-            let delay = 0;
-            
-            terminalLines.forEach((line, index) => {
-                const text = line.textContent;
-                line.textContent = '';
+            };
+
+            useEffect(() => {
+                const handleMouseUp = () => setIsDragging(false);
+                const handleMouseMove = (e) => {
+                    if (isDragging) {
+                        onMove(id, { x: e.clientX - dragOffset.x, y: e.clientY - dragOffset.y });
+                    }
+                };
+                if (isDragging) {
+                    window.addEventListener('mousemove', handleMouseMove);
+                    window.addEventListener('mouseup', handleMouseUp);
+                }
+                return () => {
+                    window.removeEventListener('mousemove', handleMouseMove);
+                    window.removeEventListener('mouseup', handleMouseUp);
+                };
+            }, [isDragging, id, onMove, dragOffset]);
+
+            if (!isOpen || isMinimized) return null;
+
+            return (
+                <div 
+                    ref={windowRef}
+                    className="absolute raetron-window flex flex-col overflow-hidden"
+                    style={{ 
+                        left: position.x, top: position.y, zIndex: zIndex,
+                        width: window.innerWidth < 640 ? '94%' : '720px',
+                        height: window.innerWidth < 640 ? '75%' : '520px',
+                        transform: (typeof position.x === 'string' && position.x === '50%' && !isDragging) ? 'translate(-50%, -50%)' : 'none'
+                    }}
+                    onMouseDown={() => onFocus(id)}
+                >
+                    <div className="h-8 raetron-title-bar flex items-center justify-between px-2 select-none cursor-move" onMouseDown={handleMouseDown}>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            {id === 'welcome' && <Icons.Terminal />}
+                            {id === 'chars' && <Icons.User />}
+                            {id === 'ceo' && <Icons.Tie />}
+                            <span className="font-ui tracking-wider pt-1 bloom-white">{title}</span>
+                        </div>
+                        <div className="flex gap-2">
+                            <button onClick={(e) => { e.stopPropagation(); onMinimize(id); }} className="text-slate-400 hover:text-white"><Icons.Minimize /></button>
+                            <button onClick={(e) => { e.stopPropagation(); onClose(id); }} className="text-slate-400 hover:text-red-500"><Icons.Close /></button>
+                        </div>
+                    </div>
+                    <div className="flex-1 bg-slate-900 p-1 overflow-auto relative">
+                        {content}
+                    </div>
+                </div>
+            );
+        };
+
+        const WelcomeContent = ({ openWindow }) => (
+            <div className="h-full w-full bg-slate-950 text-slate-300 p-6 font-term text-xl overflow-y-auto">
                 
-                setTimeout(() => {
-                    typeWriter(line, text);
-                }, delay);
+                <div className="border-2 border-slate-700 p-8 mb-8 text-center bg-[#020617] relative overflow-hidden shadow-xl">
+                    <div className="relative z-10">
+                        <h1 className="text-6xl md:text-7xl mb-2 font-bold text-slate-100 glitch font-title tracking-widest bloom-white" data-text="THE PROJECT">THE PROJECT</h1>
+                        <div className="h-px bg-amber-900/50 w-1/2 mx-auto my-4"></div>
+                        <h2 className="text-xl md:text-2xl tracking-[0.3em] text-amber-500 font-ui bloom-amber">
+                            RAETRON ENTERPRISES
+                        </h2>
+                        <p className="font-doc text-sm text-slate-500 uppercase pt-2 tracking-widest">
+                            "INNOVATING TOMORROW, TODAY"
+                        </p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="border border-slate-700 p-4 hover:border-blue-500 hover:bg-slate-800/50 transition-colors cursor-pointer group bg-[#0f172a]" onClick={() => openWindow('story', 'CHAPTER_PREVIEW.DOC')}>
+                        <h3 className="font-ui text-lg text-blue-400 group-hover:text-blue-300 mb-2 border-b border-slate-700 pb-1 bloom-blue">PROJECT ARCHIVE</h3>
+                        <p className="font-doc text-sm text-slate-500">FILE: PROJECT_SUMMARY.TXT</p>
+                        <p className="text-green-400 font-bold blink mt-2 font-term">> ACCESS MANUSCRIPT_</p>
+                    </div>
+                    <div className="border border-slate-700 p-4 hover:border-amber-500 hover:bg-slate-800/50 transition-colors cursor-pointer group bg-[#0f172a]" onClick={() => openWindow('buy', 'ACQUIRE_ASSET.EXE')}>
+                        <h3 className="font-ui text-lg text-amber-500 group-hover:text-amber-300 mb-2 border-b border-slate-700 pb-1 bloom-amber">REQUISITION</h3>
+                        <p className="font-doc text-sm text-slate-500">STOCK: LIMITED</p>
+                        <p className="text-green-400 font-bold mt-2 font-term">> INITIATE ORDER_</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const StoryContent = () => {
+            const [activeChapter, setActiveChapter] = useState(STORY_CHAPTERS[0]);
+            return (
+                <div className="h-full flex flex-col md:flex-row bg-slate-950 text-slate-300 font-doc text-sm">
+                    <div className="w-full md:w-1/3 border-r border-slate-700 bg-slate-900 overflow-y-auto p-2">
+                        <div className="font-ui text-xs text-slate-500 mb-2 px-2 tracking-widest">AVAILABLE FILES:</div>
+                        {STORY_CHAPTERS.map(chap => (
+                            <button 
+                                key={chap.id} 
+                                onClick={() => setActiveChapter(chap)}
+                                className={`w-full text-left p-2 mb-1 border font-ui text-xs ${activeChapter.id === chap.id ? 'border-blue-500 text-blue-400 bg-slate-800 bloom-blue' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
+                            >
+                                {chap.title}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="flex-1 p-6 overflow-y-auto bg-[#020617]">
+                        <h2 className="text-xl text-blue-500 font-bold mb-4 border-b border-slate-800 pb-2 font-ui bloom-blue">{activeChapter.title}</h2>
+                        <p className="whitespace-pre-wrap leading-relaxed text-slate-300 font-doc text-base">{activeChapter.text}</p>
+                    </div>
+                </div>
+            );
+        };
+
+        const CharacterContent = () => (
+            <div className="h-full w-full bg-slate-950 text-slate-300 p-4 font-ui overflow-y-auto">
+                <h2 className="text-xl text-blue-400 font-bold mb-4 border-b border-slate-700 pb-1 bloom-blue tracking-widest">PERSONNEL DATABASE // CLASSIFIED</h2>
+                <div className="grid gap-4">
+                    {CHARACTERS.map(char => (
+                        <div key={char.id} className="border border-slate-700 bg-[#0f172a] p-3 flex gap-4 group hover:border-blue-500 transition-all">
+                            <div className="w-24 h-24 bg-slate-800 border border-slate-600 flex items-center justify-center text-slate-500 group-hover:text-blue-400 overflow-hidden relative">
+                                {char.img ? (
+                                    <img src={char.img} alt={char.name} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0" />
+                                ) : (
+                                    <Icons.User />
+                                )}
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex justify-between items-start">
+                                    <h3 className="text-lg text-slate-200 font-bold bloom-white">{char.name}</h3>
+                                    <span className={`text-xs px-1 border ${char.status === 'SECURITY RISK' ? 'border-red-500 text-red-500 bloom-red' : 'border-green-500 text-green-500 bloom-green'}`}>{char.status}</span>
+                                </div>
+                                <p className="text-blue-400 text-sm mb-1">{char.role}</p>
+                                <p className="font-doc text-xs text-slate-400 leading-tight mb-2">{char.desc}</p>
+                                <p className="font-term text-xs text-slate-600 mt-1">{char.stats}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const DeepDiveContent = () => (
+            <div className="h-full w-full bg-slate-950 text-slate-300 p-4 font-ui overflow-y-auto">
+                <h2 className="text-xl text-red-500 font-bold mb-4 border-b border-red-900/50 pb-1 bloom-red tracking-widest">ANOMALY REPORTS // LEVEL 4</h2>
+                <div className="space-y-4">
+                    {DEEP_DIVES.map(dive => (
+                        <div key={dive.id} className="border border-red-900/30 bg-red-950/10 p-4 hover:bg-red-950/20 transition-colors">
+                            <div className="flex justify-between items-center mb-2">
+                                <h3 className="text-lg text-red-400 font-bold bloom-red">{dive.title}</h3>
+                                <span className="text-xs text-red-600 border border-red-900 px-1">{dive.label}</span>
+                            </div>
+                            <p className="font-doc text-sm text-slate-400 whitespace-pre-wrap">{dive.content}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const CEOContent = () => (
+            <div className="h-full w-full bg-slate-900 text-slate-300 p-6 flex flex-col overflow-y-auto font-doc">
+                <div className="border-b-2 border-amber-700/50 pb-4 mb-4 flex gap-4 items-center">
+                    <div className="w-20 h-24 border border-amber-600 bg-amber-900/20 flex items-center justify-center text-amber-500 bloom-amber">
+                        <Icons.Tie />
+                    </div>
+                    <div>
+                         <h2 className="font-ui text-sm text-amber-600 font-bold bloom-amber">VISIONARY CEO:</h2>
+                         <h1 className="font-ui text-2xl text-slate-200 font-bold tracking-wider bloom-white">RAYMOND ROTHENBERG</h1>
+                         <p className="text-xs text-slate-500 uppercase tracking-widest mt-1 font-ui">TIME MAGAZINE SPECIAL REPORT [1986]</p>
+                    </div>
+                </div>
+                <div className="text-sm leading-relaxed text-slate-400 space-y-4 text-justify p-6 border border-slate-700 bg-[#020617]">
+                    <p><strong className="text-amber-500">Raymond Rothenberg</strong>, founder and CEO of RAEtron Enterprises, is widely credited with architecting the modern technological landscape. His pioneering work in advanced computing and experimental interfaces has propelled humanity into a new era.</p>
+                    <p>Under his leadership, RAEtron has moved beyond mere product manufacturing to become a dominant force in shaping global infrastructure. His vision of "Innovating Tomorrow, Today" drives the company's relentless pursuit of progress.</p>
+                </div>
+                <div className="mt-auto pt-4 border-t border-slate-700 font-term text-xs flex justify-between text-amber-700 bloom-amber">
+                    <span>STATUS: ACTIVE / OMEGA</span>
+                    <span>ID: RR-001-A</span>
+                </div>
+            </div>
+        );
+
+        const ConnectContent = () => {
+            const [email, setEmail] = useState("");
+            const [status, setStatus] = useState("IDLE");
+            const [lines, setLines] = useState(["INITIATING SECURE HANDSHAKE...", "STATUS: AWAITING CREDENTIALS..."]);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setStatus("SENDING");
+                setLines(prev => [...prev, `> PROCESSING: ${email}`, "> ENCRYPTING PACKET...", "> TRANSMITTING..."]);
                 
-                delay += text.length * 50 + 500; // Adjust timing based on text length
-            });
-        });
+                const formData = new FormData();
+                formData.append('fields[email]', email);
+
+                fetch('https://assets.mailerlite.com/jsonp/1804898/forms/165903246149289160/subscribe', { method: 'POST', body: formData, mode: 'no-cors' })
+                .then(() => {
+                    setTimeout(() => {
+                        setStatus("SENT");
+                        setLines(prev => [...prev, "> ACCESS GRANTED.", "> WELCOME TO RAE-NET."]);
+                        setEmail("");
+                    }, 1000);
+                })
+                .catch(() => { setLines(prev => [...prev, "> ERROR: UPLINK FAILED."]); setStatus("IDLE"); });
+            };
+
+            return (
+                <div className="h-full bg-slate-950 text-green-500 p-4 font-term text-xl flex flex-col border border-slate-700 shadow-inner">
+                    <div className="flex-1 overflow-y-auto mb-4 text-green-400/80 p-2 bloom-green">
+                        {lines.map((line, i) => <div key={i} className="break-all mb-1">{line}</div>)}
+                        {status === "IDLE" && <div className="blink">_</div>}
+                    </div>
+                    {status === "SENT" ? (
+                         <div className="border border-green-600 p-2 text-center bg-green-900/20 text-green-400 font-bold bloom-green">UPLINK ESTABLISHED</div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="border-t border-slate-700 pt-4">
+                            <div className="flex bg-black border border-slate-600 items-center p-1">
+                                <span className="px-2 text-green-500 font-bold">></span>
+                                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-transparent border-none outline-none text-green-500 w-full p-1 font-term text-xl bloom-green" placeholder="USR@RAETRON.NET" autoFocus required disabled={status === "SENDING"} />
+                            </div>
+                            <button type="submit" disabled={status === "SENDING"} className="mt-2 bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 w-full py-1 font-ui text-sm border border-slate-600 transition-colors">{status === "SENDING" ? "CONNECTING..." : "ESTABLISH CONNECTION"}</button>
+                        </form>
+                    )}
+                </div>
+            );
+        };
+
+        const BuyContent = () => (
+            <div className="h-full bg-slate-950 text-slate-300 p-8 flex flex-col items-center justify-center text-center font-ui">
+                <h2 className="text-2xl font-bold mb-6 border-b border-amber-600 pb-2 text-amber-500 bloom-amber tracking-widest">ACQUISITION CHANNELS</h2>
+                <div className="w-full space-y-4">
+                    {/* UPDATED: Patreon Link */}
+                    <a href="https://www.patreon.com/cw/LilyRosslyn" target="_blank" className="block w-full border border-amber-500 p-4 bg-amber-900/10 hover:bg-amber-900/30 text-lg text-amber-400 font-bold transition-all bloom-amber">
+                        [ JOIN THE ARCHIVE (PATREON) ]
+                    </a>
+                    
+                    {/* UPDATED: Fourthwall Link */}
+                    <a href="https://shop.lilyrosslyn.com" target="_blank" className="block w-full border border-blue-500 p-4 bg-blue-900/10 hover:bg-blue-900/30 text-lg text-blue-400 font-bold transition-all bloom-blue">
+                        [ REQUISITION SUPPLIES (MERCH) ]
+                    </a>
+                    
+                    {/* Flavor Text / Offline Links */}
+                    <div className="block w-full border border-slate-700 p-3 text-slate-600 text-lg cursor-not-allowed bg-slate-900">
+                        [ AMAZON TERMINAL (OFFLINE) ]
+                    </div>
+                </div>
+            </div>
+        );
+
+        // --- Main App ---
+        const App = () => {
+            const [windows, setWindows] = useState([{ id: 'welcome', title: 'SYSTEM_ROOT', isOpen: true, isMinimized: false, zIndex: 10, position: { x: '50%', y: '50%' }, content: null }]);
+            const [activeWindowId, setActiveWindowId] = useState('welcome');
+            const [nextZIndex, setNextZIndex] = useState(11);
+            const [startMenuOpen, setStartMenuOpen] = useState(false);
+
+            useEffect(() => {
+                const isMobile = window.innerWidth < 640;
+                setWindows(prev => prev.map(w => ({ ...w, position: isMobile ? { x: 5, y: 5 } : w.position })));
+            }, []);
+
+            const openWindow = (id, title, contentComponent = null) => {
+                setStartMenuOpen(false);
+                setWindows(prev => {
+                    const existing = prev.find(w => w.id === id);
+                    if (existing) return prev.map(w => w.id === id ? { ...w, isOpen: true, isMinimized: false, zIndex: nextZIndex } : w);
+                    
+                    let content = contentComponent;
+                    if (!content) {
+                         if (id === 'welcome') content = <WelcomeContent openWindow={openWindow} />;
+                         if (id === 'story') content = <StoryContent />;
+                         if (id === 'chars') content = <CharacterContent />;
+                         if (id === 'deepdive') content = <DeepDiveContent />;
+                         if (id === 'ceo') content = <CEOContent />;
+                         if (id === 'connect') content = <ConnectContent />;
+                         if (id === 'buy') content = <BuyContent />;
+                    }
+                    const isMobile = window.innerWidth < 640;
+                    const offset = prev.length * 20;
+                    return [...prev, { id, title, isOpen: true, isMinimized: false, zIndex: nextZIndex, position: isMobile ? { x: 5, y: 5 } : { x: 50 + offset, y: 50 + offset }, content }];
+                });
+                setActiveWindowId(id);
+                setNextZIndex(prev => prev + 1);
+            };
+
+            const closeWindow = (id) => setWindows(prev => prev.map(w => w.id === id ? { ...w, isOpen: false } : w));
+            const minimizeWindow = (id) => setWindows(prev => prev.map(w => w.id === id ? { ...w, isMinimized: true } : w));
+            const focusWindow = (id) => { setActiveWindowId(id); setWindows(prev => prev.map(w => w.id === id ? { ...w, zIndex: nextZIndex } : w)); setNextZIndex(prev => prev + 1); };
+            const moveWindow = (id, newPos) => setWindows(prev => prev.map(w => w.id === id ? { ...w, position: newPos } : w));
+            const restoreWindow = (id) => { setWindows(prev => prev.map(w => w.id === id ? { ...w, isMinimized: false, zIndex: nextZIndex } : w)); setNextZIndex(prev => prev + 1); setActiveWindowId(id); };
+            const toggleStartMenu = () => setStartMenuOpen(!startMenuOpen);
+
+            const DesktopIcon = ({ label, icon: Icon, id, title, content, externalLink, colorClass }) => (
+                <div onClick={() => externalLink ? window.location.href = externalLink : openWindow(id, title, content)} className="flex flex-col items-center justify-center w-24 gap-1 p-2 cursor-pointer hover:bg-slate-800/50 border border-transparent hover:border-slate-600 rounded group mb-4">
+                    <div className={`${colorClass || 'text-slate-200'} group-hover:text-white filter drop-shadow-md bloom-white transition-all`}><Icon /></div>
+                    <span className="text-slate-200 group-hover:text-white text-center font-ui text-xs bg-slate-900/80 px-1 tracking-wider">{label}</span>
+                </div>
+            );
+
+            return (
+                <div className="relative w-full h-screen overflow-hidden font-term">
+                    <div className="scanlines"></div>
+                    <div className="screen-glow"></div>
+
+                    <div className="absolute top-0 left-0 p-6 grid grid-cols-1 gap-4 z-20">
+                        <DesktopIcon label="SYSTEM_ROOT" icon={Icons.Terminal} id="welcome" title="SYSTEM_ROOT" content={<WelcomeContent openWindow={openWindow} />} colorClass="text-amber-500" />
+                        <DesktopIcon label="CEO_BIO" icon={Icons.Tie} id="ceo" title="EXECUTIVE_PROFILE" content={<CEOContent />} colorClass="text-amber-600" />
+                        <DesktopIcon label="PROJECT_FILES" icon={Icons.Folder} id="story" title="CHAPTER_PREVIEW.DOC" content={<StoryContent />} colorClass="text-blue-400" />
+                        <DesktopIcon label="PERSONNEL_DB" icon={Icons.User} id="chars" title="PERSONNEL_DATABASE" content={<CharacterContent />} colorClass="text-blue-500" />
+                        <DesktopIcon label="ANOMALY_RPTS" icon={Icons.Database} id="deepdive" title="ANOMALY_REPORTS" content={<DeepDiveContent />} colorClass="text-red-500" />
+                        <DesktopIcon label="REQUISITION" icon={Icons.Disk} id="buy" title="ACQUISITION" content={<BuyContent />} colorClass="text-green-500" />
+                        <DesktopIcon label="RAE_NET" icon={Icons.Mail} id="connect" title="SECURE_UPLINK" content={<ConnectContent />} colorClass="text-green-400" />
+                        
+                        <div className="h-px bg-slate-800 w-16 mx-auto my-2"></div>
+                        {/* UPDATED: Log Out points to Main Site */}
+                        <DesktopIcon label="LOG_OUT" icon={Icons.User} externalLink="https://lilyrosslyn.com" colorClass="text-slate-500" />
+                    </div>
+
+                    {windows.map(win => <DraggableWindow key={win.id} {...win} content={win.content || <WelcomeContent openWindow={openWindow} />} onClose={closeWindow} onMinimize={minimizeWindow} onFocus={focusWindow} onMove={moveWindow} />)}
+
+                    <div className="absolute bottom-0 left-0 w-full h-10 bg-slate-900 border-t border-slate-700 flex items-center px-2 z-[100] shadow-2xl">
+                        <button onClick={toggleStartMenu} className={`flex items-center gap-1 px-3 py-1 mr-2 border border-slate-600 text-slate-300 hover:bg-slate-800 font-ui font-bold text-sm transition-all ${startMenuOpen ? 'bg-slate-800 text-white' : ''}`}>
+                            <Icons.Start /><span className="pt-0.5 bloom-white">START</span>
+                        </button>
+                        <div className="flex-1 flex gap-1 overflow-x-auto px-2">
+                            {windows.filter(w => w.isOpen).map(win => (
+                                <button key={win.id} onClick={() => win.isMinimized || activeWindowId !== win.id ? restoreWindow(win.id) : minimizeWindow(win.id)} className={`flex items-center gap-2 px-3 py-1 min-w-[120px] max-w-[200px] truncate border text-xs font-ui transition-all ${activeWindowId === win.id && !win.isMinimized ? 'bg-slate-800 text-white border-slate-500 shadow-inner bloom-white' : 'bg-slate-900 text-slate-500 border-slate-800 hover:border-slate-600'}`}>
+                                    <span>{win.title}</span>
+                                </button>
+                            ))}
+                        </div>
+                        <div className="px-3 py-1 text-sm font-ui mx-1 text-amber-600 border-l border-slate-700 bloom-amber">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                    </div>
+
+                    {startMenuOpen && (
+                        <div className="absolute bottom-10 left-2 w-64 bg-slate-900 border border-slate-600 z-[110] flex flex-col shadow-xl">
+                            <div className="bg-slate-800 text-white font-bold p-2 flex items-center gap-2 border-b border-slate-600"><span className="font-ui text-xs tracking-widest bloom-white">RAEtron OS v1.1.0</span></div>
+                            <div className="p-1 flex flex-col gap-1">
+                                <button onClick={() => window.location.href='console.html'} className="p-2 text-left text-green-500 hover:bg-slate-800 font-ui text-sm flex items-center gap-2 transition-colors bloom-green"><Icons.Terminal /> SYSTEM BACKDOOR</button>
+                                <div className="h-px bg-slate-800 my-1"></div>
+                                {/* UPDATED: Emergency Shutdown points to Main Site */}
+                                <button onClick={() => window.location.href='https://lilyrosslyn.com'} className="p-2 text-left text-red-400 hover:bg-slate-800 font-ui text-sm flex items-center gap-2 transition-colors bloom-red"><span className="font-bold">⚠</span> EMERGENCY SHUTDOWN</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
-
-
-
