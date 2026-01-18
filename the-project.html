@@ -21,7 +21,6 @@
             --bg-darker: #020617;  
             --bg-dark: #0f172a;    
             --win-bg: #1e293b;     
-            /* UPDATED: Made slightly lighter to pop against background */
             --win-header: #475569; 
             --win-border: #64748b; 
         }
@@ -76,7 +75,7 @@
 
         .raetron-title-bar {
             background: var(--win-header);
-            color: #f1f5f9; /* Slate 100 - Brighter */
+            color: #f1f5f9;
             font-family: 'Share Tech Mono', monospace;
             font-weight: bold;
             letter-spacing: 1px;
@@ -84,7 +83,7 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         
-        /* NEW: Pulse animation for the close instruction */
+        /* Pulse animation */
         .pulse-text { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
@@ -223,9 +222,9 @@
                             <span className="font-ui tracking-wider pt-1 bloom-white">{title}</span>
                         </div>
                         <div className="flex gap-2">
-                            <button onClick={(e) => { e.stopPropagation(); onMinimize(id); }} className="text-slate-300 hover:text-white"><Icons.Minimize /></button>
-                            {/* UPDATED: Made Close button RED by default for visibility */}
-                            <button onClick={(e) => { e.stopPropagation(); onClose(id); }} className="text-red-500 hover:text-red-400 hover:scale-110 transition-transform"><Icons.Close /></button>
+                            {/* FIX: STOP PROPAGATION ON BUTTON MOUSE DOWN TO PREVENT DRAGGING */}
+                            <button onMouseDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); onMinimize(id); }} className="text-slate-300 hover:text-white"><Icons.Minimize /></button>
+                            <button onMouseDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); onClose(id); }} className="text-red-500 hover:text-red-400 hover:scale-110 transition-transform"><Icons.Close /></button>
                         </div>
                     </div>
                     <div className="flex-1 bg-slate-900 p-1 overflow-auto relative">
@@ -236,9 +235,12 @@
         };
 
         const WelcomeContent = ({ openWindow }) => (
-            <div className="h-full w-full bg-slate-950 text-slate-300 p-6 font-term text-xl overflow-y-auto flex flex-col">
+            // FIX: Removed 'flex flex-col' and 'flex-1' complications. 
+            // Now it's just a scrolling block. The instruction is at the bottom of the scroll area.
+            <div className="h-full w-full bg-slate-950 text-slate-300 p-6 font-term text-xl overflow-y-auto">
                 
-                <div className="border-2 border-slate-700 p-8 mb-8 text-center bg-[#020617] relative overflow-hidden shadow-xl">
+                {/* HEADLINE: Added shrink-0 to prevent squishing */}
+                <div className="shrink-0 border-2 border-slate-700 p-8 mb-8 text-center bg-[#020617] relative overflow-hidden shadow-xl">
                     <div className="relative z-10">
                         <h1 className="text-4xl md:text-7xl mb-2 font-bold text-slate-100 glitch font-title tracking-widest bloom-white" data-text="THE PROJECT">THE PROJECT</h1>
                         <div className="h-px bg-amber-900/50 w-1/2 mx-auto my-4"></div>
@@ -264,8 +266,9 @@
                     </div>
                 </div>
 
-                {/* NEW: Explicit Instructions for the User at the bottom */}
-                <div className="mt-auto border-t border-slate-800 pt-4 text-center">
+                {/* FIX: Added 'md:hidden' so this only shows on mobile devices.
+                    Removed 'mt-auto' so it doesn't force vertical spacing issues. */}
+                <div className="border-t border-slate-800 pt-4 text-center md:hidden">
                     <p className="font-ui text-sm text-slate-500 mb-1">SYSTEM MESSAGE:</p>
                     <p className="font-term text-green-500 pulse-text">
                         [ CLOSE THIS WINDOW TO ACCESS DESKTOP ICONS ]
