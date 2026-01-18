@@ -21,8 +21,9 @@
             --bg-darker: #020617;  
             --bg-dark: #0f172a;    
             --win-bg: #1e293b;     
-            --win-header: #334155; 
-            --win-border: #475569; 
+            /* UPDATED: Made slightly lighter to pop against background */
+            --win-header: #475569; 
+            --win-border: #64748b; 
         }
 
         body {
@@ -75,13 +76,17 @@
 
         .raetron-title-bar {
             background: var(--win-header);
-            color: #cbd5e1; /* Slate 300 */
+            color: #f1f5f9; /* Slate 100 - Brighter */
             font-family: 'Share Tech Mono', monospace;
             font-weight: bold;
             letter-spacing: 1px;
             border-bottom: 1px solid var(--win-border);
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
+        
+        /* NEW: Pulse animation for the close instruction */
+        .pulse-text { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
         /* --- Animations & Glitch --- */
         .blink { animation: blinker 1s steps(2, start) infinite; }
@@ -124,24 +129,7 @@
             { 
                 id: 0, 
                 title: "FILE_00: PROJECT_SUMMARY.TXT", 
-                text: `CLASSIFIED SUMMARY // CLEARANCE LEVEL 1
-
-YEAR: 1986
-LOCATION: Queens Village, NY
-
-SUBJECT: THE RAE-TRON INCIDENT
-
-Robbie Kingsley didn't care about scientific breakthroughs. He just wanted the $5,000 Grand Prize from the RAEtron Science Fair to buy a pair of green suede Vans and redeem his reputation.
-
-To win, he recruited a team of local outcasts ("The Misfits") to attempt the impossible: construct a fully immersive Virtual Reality system in Cassandra Simmons' basement, utilizing the cryptic schematics and dormant mainframe left behind by a vanished scientist, Dr. Alexander Stevens.
-
-But they didn't realize that Stevens hadn't just designed a game engine. He had built a bridge.
-
-When the team powered up the prototype, they didn't just simulate a new world—they tore a hole in the fabric of this one. Now, the "glitches" aren't staying on the screen. Shadows are manifesting in the streets of Queens Village, and the code is bleeding into reality.
-
-CAUTION: The signal is active. Information contained herein is cognitively hazardous. Proceed at your own risk.
-
-> END SUMMARY` 
+                text: `CLASSIFIED SUMMARY // CLEARANCE LEVEL 1\n\nYEAR: 1986\nLOCATION: Queens Village, NY\n\nSUBJECT: THE RAE-TRON INCIDENT\n\nRobbie Kingsley didn't care about scientific breakthroughs. He just wanted the $5,000 Grand Prize from the RAEtron Science Fair to buy a pair of green suede Vans and redeem his reputation.\n\nTo win, he recruited a team of local outcasts ("The Misfits") to attempt the impossible: construct a fully immersive Virtual Reality system in Cassandra Simmons' basement, utilizing the cryptic schematics and dormant mainframe left behind by a vanished scientist, Dr. Alexander Stevens.\n\nBut they didn't realize that Stevens hadn't just designed a game engine. He had built a bridge.\n\nWhen the team powered up the prototype, they didn't just simulate a new world—they tore a hole in the fabric of this one. Now, the "glitches" aren't staying on the screen. Shadows are manifesting in the streets of Queens Village, and the code is bleeding into reality.\n\nCAUTION: The signal is active. Information contained herein is cognitively hazardous. Proceed at your own risk.\n\n> END SUMMARY` 
             },
             { id: 1, title: "CH_01: FROM VANS TO VIRTUAL", text: "Dust and debris formed layers in the abandoned basement research facility. A gust of fall air burst through the small, cracked window panel. A book flipped open, revealing the contents of its pages, which bore the work of the brilliant Dr. Alexander Stevens. It was clear that he followed in the footsteps of Ivan Sutherland, \"The Father of Virtual Reality\". But that was in 1965.\n\nOver twenty years later, Stevens’ work faded into obscurity as he vanished without a trace. He left only his legacy behind that was slowly overshadowed by newer advancements in technology. Yet none achieved the potential of his magnum opus. There in the shadowed corner sat the dormant traces of his HyperRealm Nexus, of which, like Dr. Stevens, was nowhere to be found.\n\nThe eerie quiet was displaced only by the sporadic crackling and buzzing sounds from old computer monitors. One monitor, like a sentinel, beckoned someone to uncover the laboratory's dark potential as a green cursor blinked to life on a black screen..." },
             { id: 2, title: "CH_02: THE MISFITS", text: "Robbie found Ben in front of school the next morning before 1st period. He took a deep breath as he approached. He was a pro at donning his cool, charming facade; it had become second-nature to him, a protective shield against any fear or doubt that threatened to interrupt his latest plan.\n\n“So last night I stayed up, going over the schematics in my head,” Robbie said. He handed Ben, a dog-eared notebook, opened to a page with what looked like scribble. As Ben glanced at the page, a small ‘hmm’ escaped his lips.\n“What do you see?” Robbie asked curiously.\nBen slowly looked up and replied with a stoic look in his eyes, “Judging by all the necessary elements needed... I see that it's not reasonable to do this on our own.”" },
@@ -228,15 +216,16 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
                     onMouseDown={() => onFocus(id)}
                 >
                     <div className="h-8 raetron-title-bar flex items-center justify-between px-2 select-none cursor-move" onMouseDown={handleMouseDown}>
-                        <div className="flex items-center gap-2 text-slate-300">
+                        <div className="flex items-center gap-2 text-slate-100">
                             {id === 'welcome' && <Icons.Terminal />}
                             {id === 'chars' && <Icons.User />}
                             {id === 'ceo' && <Icons.Tie />}
                             <span className="font-ui tracking-wider pt-1 bloom-white">{title}</span>
                         </div>
                         <div className="flex gap-2">
-                            <button onClick={(e) => { e.stopPropagation(); onMinimize(id); }} className="text-slate-400 hover:text-white"><Icons.Minimize /></button>
-                            <button onClick={(e) => { e.stopPropagation(); onClose(id); }} className="text-slate-400 hover:text-red-500"><Icons.Close /></button>
+                            <button onClick={(e) => { e.stopPropagation(); onMinimize(id); }} className="text-slate-300 hover:text-white"><Icons.Minimize /></button>
+                            {/* UPDATED: Made Close button RED by default for visibility */}
+                            <button onClick={(e) => { e.stopPropagation(); onClose(id); }} className="text-red-500 hover:text-red-400 hover:scale-110 transition-transform"><Icons.Close /></button>
                         </div>
                     </div>
                     <div className="flex-1 bg-slate-900 p-1 overflow-auto relative">
@@ -247,11 +236,10 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
         };
 
         const WelcomeContent = ({ openWindow }) => (
-            <div className="h-full w-full bg-slate-950 text-slate-300 p-6 font-term text-xl overflow-y-auto">
+            <div className="h-full w-full bg-slate-950 text-slate-300 p-6 font-term text-xl overflow-y-auto flex flex-col">
                 
                 <div className="border-2 border-slate-700 p-8 mb-8 text-center bg-[#020617] relative overflow-hidden shadow-xl">
                     <div className="relative z-10">
-                        {/* ADJUSTED FONT SIZE FOR MOBILE */}
                         <h1 className="text-4xl md:text-7xl mb-2 font-bold text-slate-100 glitch font-title tracking-widest bloom-white" data-text="THE PROJECT">THE PROJECT</h1>
                         <div className="h-px bg-amber-900/50 w-1/2 mx-auto my-4"></div>
                         <h2 className="text-sm md:text-2xl tracking-[0.3em] text-amber-500 font-ui bloom-amber">
@@ -263,7 +251,7 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                     <div className="border border-slate-700 p-4 hover:border-blue-500 hover:bg-slate-800/50 transition-colors cursor-pointer group bg-[#0f172a]" onClick={() => openWindow('story', 'CHAPTER_PREVIEW.DOC')}>
                         <h3 className="font-ui text-lg text-blue-400 group-hover:text-blue-300 mb-2 border-b border-slate-700 pb-1 bloom-blue">PROJECT ARCHIVE</h3>
                         <p className="font-doc text-sm text-slate-500">FILE: PROJECT_SUMMARY.TXT</p>
@@ -274,6 +262,14 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
                         <p className="font-doc text-sm text-slate-500">STOCK: LIMITED</p>
                         <p className="text-green-400 font-bold mt-2 font-term">> INITIATE ORDER_</p>
                     </div>
+                </div>
+
+                {/* NEW: Explicit Instructions for the User at the bottom */}
+                <div className="mt-auto border-t border-slate-800 pt-4 text-center">
+                    <p className="font-ui text-sm text-slate-500 mb-1">SYSTEM MESSAGE:</p>
+                    <p className="font-term text-green-500 pulse-text">
+                        [ CLOSE THIS WINDOW TO ACCESS DESKTOP ICONS ]
+                    </p>
                 </div>
             </div>
         );
