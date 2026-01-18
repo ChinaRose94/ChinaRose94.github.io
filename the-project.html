@@ -120,7 +120,6 @@
         const { useState, useEffect, useRef } = React;
 
         // --- DATA ---
-        // FIXED: Using backticks (`) for multi-line text to prevent syntax errors
         const STORY_CHAPTERS = [
             { 
                 id: 0, 
@@ -149,81 +148,18 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
             { id: 3, title: "CH_03: GLITCHES", text: "Vince Myers walked through the neighborhood park on a Saturday morning with his new friend Jimmy, an exceedingly popular Junior on the varsity football team. Jimmy had carefully built up a bad boy reputation and Vince was key in keeping up the appearance. They scanned for the target. Today’s agenda: The new kid who Jimmy thought could be trouble.\n\nRobbie and his friends strode into the park so that Josie could sketch out the landscape. They happened upon the scene that just took place with Vince and froze with uncertainty and caution..." }
         ];
 
-        // ADD YOUR IMAGE PATHS HERE (e.g., 'images/Ben.jpg')
+        // ADD YOUR IMAGE PATHS HERE
         const CHARACTERS = [
-            { 
-                id: 1, 
-                name: "Robbie Kingsley", 
-                role: "PROJECT LEADER", 
-                stats: "STR:4 INT:7 CHA:8", 
-                desc: "Driven by redemption. Wants the green suede Vans. Haunted by failure.", 
-                status: "ACTIVE", 
-                img: "images/robbie.png"  // <--- Changed to .png
-            },
-            { 
-                id: 2, 
-                name: "Cassandra Simmons", 
-                role: "TECH SPECIALIST", 
-                stats: "STR:3 INT:9 CHA:9", 
-                desc: "Secret genius masking as popular. Her basement is Ground Zero.", 
-                status: "ACTIVE", 
-                img: "images/cassie.png" 
-            },
-            { 
-                id: 3, 
-                name: "Jayendra Chakrabarti", 
-                role: "VISUAL ANALYST", 
-                stats: "STR:2 INT:10 CHA:3", 
-                desc: "Technical wizard. Arrogant but essential. First to see anomalies.", 
-                status: "PERCEPTIVE", 
-                img: "images/jay.png" 
-            },
-            { 
-                id: 4, 
-                name: "Benjamin Zhang", 
-                role: "SYSTEMS ARCHITECT", 
-                stats: "STR:6 INT:6 CHA:7", 
-                desc: "Robbie's moral compass. Immigrant family background. Keeps the team grounded.", 
-                status: "ACTIVE", 
-                img: "images/ben.png" 
-            },
-            { 
-                id: 5, 
-                name: "Derek Rosemont", 
-                role: "AUDIO ANALYST", 
-                stats: "STR:5 INT:8 CHA:5", 
-                desc: "Sound engineer. His music triggers the dimensional rifts.", 
-                status: "SKEPTIC", 
-                img: "images/derek.png" 
-            },
-            { 
-                id: 6, 
-                name: "Josie Wilder", 
-                role: "INTEL SPECIALIST", 
-                stats: "STR:3 INT:7 CHA:4", 
-                desc: "Visualizer. Escaping a toxic home life through the VR world.", 
-                status: "OBSERVANT", 
-                img: "images/josie.png" 
-            },
-            { 
-                id: 7, 
-                name: "Vincent Myers", 
-                role: "SECURITY RISK", 
-                stats: "STR:9 INT:4 CHA:5", 
-                desc: "The bully with a hidden conscience. Caught between survival and redemption.", 
-                status: "MONITORED", 
-                img: "images/vince.png" 
-            },
-            { 
-                id: 8, 
-                name: "Shelby DiMario", 
-                role: "STREET OPERATIVE", 
-                stats: "STR:6 INT:5 CHA:8", 
-                desc: "Rebellious spirit. Knows the streets better than anyone.", 
-                status: "REBELLIOUS", 
-                img: "images/shelby.png" 
-            }
+            { id: 1, name: "Robbie Kingsley", role: "PROJECT LEADER", stats: "STR:4 INT:7 CHA:8", desc: "Driven by redemption. Wants the green suede Vans. Haunted by failure.", status: "ACTIVE", img: "images/robbie.png" },
+            { id: 2, name: "Cassandra Simmons", role: "TECH SPECIALIST", stats: "STR:3 INT:9 CHA:9", desc: "Secret genius masking as popular. Her basement is Ground Zero.", status: "ACTIVE", img: "images/cassie.png" },
+            { id: 3, name: "Jayendra Chakrabarti", role: "VISUAL ANALYST", stats: "STR:2 INT:10 CHA:3", desc: "Technical wizard. Arrogant but essential. First to see anomalies.", status: "PERCEPTIVE", img: "images/jay.png" },
+            { id: 4, name: "Benjamin Zhang", role: "SYSTEMS ARCHITECT", stats: "STR:6 INT:6 CHA:7", desc: "Robbie's moral compass. Immigrant family background. Keeps the team grounded.", status: "ACTIVE", img: "images/ben.png" },
+            { id: 5, name: "Derek Rosemont", role: "AUDIO ANALYST", stats: "STR:5 INT:8 CHA:5", desc: "Sound engineer. His music triggers the dimensional rifts.", status: "SKEPTIC", img: "images/derek.png" },
+            { id: 6, name: "Josie Wilder", role: "INTEL SPECIALIST", stats: "STR:3 INT:7 CHA:4", desc: "Visualizer. Escaping a toxic home life through the VR world.", status: "OBSERVANT", img: "images/josie.png" },
+            { id: 7, name: "Vincent Myers", role: "SECURITY RISK", stats: "STR:9 INT:4 CHA:5", desc: "The bully with a hidden conscience. Caught between survival and redemption.", status: "MONITORED", img: "images/vince.png" },
+            { id: 8, name: "Shelby DiMario", role: "STREET OPERATIVE", stats: "STR:6 INT:5 CHA:8", desc: "Rebellious spirit. Knows the streets better than anyone.", status: "REBELLIOUS", img: "images/shelby.png" }
         ];
+
         const DEEP_DIVES = [
             { id: 1, title: "STRANGE SCIENCE", label: "QUANTUM ENTANGLEMENT", content: "THEORY:\nThe VR system creates conditions that allow quantum mechanical effects to manifest in the real world. By utilizing specific sound frequencies (cymatics) and electromagnetic forces, the system achieves 'Quantum Coherence' over macro scales.\n\nSWIMMING POOL ANALOGY:\nImagine reality as two overlapping swimming pools. The VR system acts like a drill creating holes between them, allowing water (particles) to flow between and blend the two pools." },
             { id: 2, title: "HYPERREALM NEXUS", label: "CLASSIFIED: DR. STEVENS", content: "SUBJECT: DR. ALEXANDER STEVENS (1965)\nSTATUS: MISSING / ERASED\n\nDr. Stevens followed in the footsteps of Ivan Sutherland ('The Father of VR'). Over 20 years ago, he built the original 'HyperRealm Nexus' in the very basement Cassie now uses.\n\nTHE GLITCH:\nThe kids did not invent the gateway; they *reactivated* it." },
@@ -315,12 +251,13 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
                 
                 <div className="border-2 border-slate-700 p-8 mb-8 text-center bg-[#020617] relative overflow-hidden shadow-xl">
                     <div className="relative z-10">
-                        <h1 className="text-6xl md:text-7xl mb-2 font-bold text-slate-100 glitch font-title tracking-widest bloom-white" data-text="THE PROJECT">THE PROJECT</h1>
+                        {/* ADJUSTED FONT SIZE FOR MOBILE */}
+                        <h1 className="text-4xl md:text-7xl mb-2 font-bold text-slate-100 glitch font-title tracking-widest bloom-white" data-text="THE PROJECT">THE PROJECT</h1>
                         <div className="h-px bg-amber-900/50 w-1/2 mx-auto my-4"></div>
-                        <h2 className="text-xl md:text-2xl tracking-[0.3em] text-amber-500 font-ui bloom-amber">
+                        <h2 className="text-sm md:text-2xl tracking-[0.3em] text-amber-500 font-ui bloom-amber">
                             RAETRON ENTERPRISES
                         </h2>
-                        <p className="font-doc text-sm text-slate-500 uppercase pt-2 tracking-widest">
+                        <p className="font-doc text-xs md:text-sm text-slate-500 uppercase pt-2 tracking-widest">
                             "INNOVATING TOMORROW, TODAY"
                         </p>
                     </div>
@@ -555,7 +492,8 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
                     <div className="scanlines"></div>
                     <div className="screen-glow"></div>
 
-                    <div className="absolute top-0 left-0 p-6 grid grid-cols-1 gap-4 z-20">
+                    {/* DESKTOP ICONS GRID - ADJUSTED FOR MOBILE (3 COLS) + Z-INDEX FIX */}
+                    <div className="absolute top-0 left-0 p-4 w-full md:w-auto md:p-6 grid grid-cols-3 gap-2 md:grid-cols-1 md:gap-4 z-0">
                         <DesktopIcon label="SYSTEM_ROOT" icon={Icons.Terminal} id="welcome" title="SYSTEM_ROOT" content={<WelcomeContent openWindow={openWindow} />} colorClass="text-amber-500" />
                         <DesktopIcon label="CEO_BIO" icon={Icons.Tie} id="ceo" title="EXECUTIVE_PROFILE" content={<CEOContent />} colorClass="text-amber-600" />
                         <DesktopIcon label="PROJECT_FILES" icon={Icons.Folder} id="story" title="CHAPTER_PREVIEW.DOC" content={<StoryContent />} colorClass="text-blue-400" />
@@ -564,7 +502,8 @@ CAUTION: The signal is active. Information contained herein is cognitively hazar
                         <DesktopIcon label="REQUISITION" icon={Icons.Disk} id="buy" title="ACQUISITION" content={<BuyContent />} colorClass="text-green-500" />
                         <DesktopIcon label="RAE_NET" icon={Icons.Mail} id="connect" title="SECURE_UPLINK" content={<ConnectContent />} colorClass="text-green-400" />
                         
-                        <div className="h-px bg-slate-800 w-16 mx-auto my-2"></div>
+                        <div className="col-span-3 md:col-span-1 h-px bg-slate-800 w-full md:w-16 mx-auto my-2"></div>
+                        
                         {/* UPDATED: Log Out points to Main Site */}
                         <DesktopIcon label="LOG_OUT" icon={Icons.User} externalLink="https://lilyrosslyn.com" colorClass="text-slate-500" />
                     </div>
