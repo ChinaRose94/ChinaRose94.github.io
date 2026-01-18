@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAEtron Systems | v1.1.0</title>
+    <title>RAEtron Systems | v1.1.1</title>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -16,8 +16,6 @@
         :root {
             --term-green: #4ade80; 
             --term-amber: #fbbf24;
-            
-            /* The "Slate/Faded Blue" Palette */
             --bg-darker: #020617;  
             --bg-dark: #0f172a;    
             --win-bg: #1e293b;     
@@ -39,7 +37,10 @@
         .bloom-amber { text-shadow: 0 0 5px rgba(251, 191, 36, 0.7); }
         .bloom-green { text-shadow: 0 0 5px rgba(74, 222, 128, 0.7); }
         .bloom-blue { text-shadow: 0 0 5px rgba(59, 130, 246, 0.7); }
-        .bloom-red { text-shadow: 0 0 5px rgba(239, 68, 68, 0.7); }
+        
+        /* UPDATED: Hotter Red Bloom for Visibility */
+        .bloom-red { text-shadow: 0 0 8px rgba(248, 113, 113, 0.9); }
+        
         .bloom-white { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
         
         .scanlines {
@@ -62,7 +63,6 @@
             z-index: 998;
         }
 
-        /* --- UI Elements --- */
         ::-webkit-scrollbar { width: 10px; background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb { background: var(--win-border); border: 1px solid var(--bg-dark); }
         ::-webkit-scrollbar-thumb:hover { background: var(--term-green); }
@@ -83,11 +83,9 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         
-        /* Pulse animation */
         .pulse-text { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
-        /* --- Animations & Glitch --- */
         .blink { animation: blinker 1s steps(2, start) infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
 
@@ -103,14 +101,9 @@
             left: -2px; text-shadow: -2px 0 #00fff9; clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
             animation: glitch-anim2 2s infinite linear alternate-reverse;
         }
-        @keyframes glitch-anim {
-            0% { clip-path: inset(10% 0 80% 0); } 100% { clip-path: inset(20% 0 70% 0); }
-        }
-        @keyframes glitch-anim2 {
-            0% { clip-path: inset(60% 0 20% 0); } 100% { clip-path: inset(70% 0 20% 0); }
-        }
+        @keyframes glitch-anim { 0% { clip-path: inset(10% 0 80% 0); } 100% { clip-path: inset(20% 0 70% 0); } }
+        @keyframes glitch-anim2 { 0% { clip-path: inset(60% 0 20% 0); } 100% { clip-path: inset(70% 0 20% 0); } }
 
-        /* Typography Utilities */
         .font-title { font-family: 'Orbitron', sans-serif; }
         .font-ui { font-family: 'Share Tech Mono', monospace; }
         .font-doc { font-family: 'Courier Prime', monospace; }
@@ -153,7 +146,6 @@
             { id: 3, title: "SHADOW BEASTS", label: "THREAT LEVEL: EXTREME", content: "SUBJECT: NON-ENTROPIC ENTITIES ('SHADOWS')\nORIGIN: EXTRA-DIMENSIONAL\n\nThese entities are composed of 'incoherent matter.' They are attracted to the order and structure of our reality.\n\nOBSERVATIONS:\n- First sighted in school hallways.\n- Manifest as flickering silhouettes.\n- Respond to emotional states and fear." }
         ];
 
-        // --- SVGs ---
         const Icons = {
             Terminal: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>,
             Disk: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M12 4v6h6"></path><path d="M4 20v-6h16v6"></path></svg>,
@@ -166,8 +158,6 @@
             Close: () => <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><line x1="2" y1="2" x2="22" y2="22" /><line x1="22" y1="2" x2="2" y2="22" /></svg>,
             Start: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="8" height="8"/><rect x="14" y="2" width="8" height="8"/><rect x="2" y="14" width="8" height="8"/><rect x="14" y="14" width="8" height="8"/></svg>
         };
-
-        // --- Components ---
 
         const DraggableWindow = ({ id, title, isOpen, isMinimized, zIndex, position, content, onClose, onMinimize, onFocus, onMove }) => {
             const [isDragging, setIsDragging] = useState(false);
@@ -209,7 +199,8 @@
                     style={{ 
                         left: position.x, top: position.y, zIndex: zIndex,
                         width: window.innerWidth < 640 ? '94%' : '720px',
-                        height: window.innerWidth < 640 ? '75%' : '520px',
+                        /* UPDATED: Mobile Height Adjustment */
+                        height: window.innerWidth < 640 ? '80%' : '520px',
                         transform: (typeof position.x === 'string' && position.x === '50%' && !isDragging) ? 'translate(-50%, -50%)' : 'none'
                     }}
                     onMouseDown={() => onFocus(id)}
@@ -222,9 +213,9 @@
                             <span className="font-ui tracking-wider pt-1 bloom-white">{title}</span>
                         </div>
                         <div className="flex gap-2">
-                            {/* FIX: STOP PROPAGATION ON BUTTON MOUSE DOWN TO PREVENT DRAGGING */}
                             <button onMouseDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); onMinimize(id); }} className="text-slate-300 hover:text-white"><Icons.Minimize /></button>
-                            <button onMouseDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); onClose(id); }} className="text-red-500 hover:text-red-400 hover:scale-110 transition-transform"><Icons.Close /></button>
+                            {/* UPDATED: Hotter Red and Glow for visibility through scanlines */}
+                            <button onMouseDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); onClose(id); }} className="text-red-400 bloom-red hover:text-white hover:scale-110 transition-transform"><Icons.Close /></button>
                         </div>
                     </div>
                     <div className="flex-1 bg-slate-900 p-1 overflow-auto relative">
@@ -235,11 +226,8 @@
         };
 
         const WelcomeContent = ({ openWindow }) => (
-            // FIX: Removed 'flex flex-col' and 'flex-1' complications. 
-            // Now it's just a scrolling block. The instruction is at the bottom of the scroll area.
             <div className="h-full w-full bg-slate-950 text-slate-300 p-6 font-term text-xl overflow-y-auto">
                 
-                {/* HEADLINE: Added shrink-0 to prevent squishing */}
                 <div className="shrink-0 border-2 border-slate-700 p-8 mb-8 text-center bg-[#020617] relative overflow-hidden shadow-xl">
                     <div className="relative z-10">
                         <h1 className="text-4xl md:text-7xl mb-2 font-bold text-slate-100 glitch font-title tracking-widest bloom-white" data-text="THE PROJECT">THE PROJECT</h1>
@@ -266,9 +254,7 @@
                     </div>
                 </div>
 
-                {/* FIX: Added 'md:hidden' so this only shows on mobile devices.
-                    Removed 'mt-auto' so it doesn't force vertical spacing issues. */}
-                <div className="border-t border-slate-800 pt-4 text-center md:hidden">
+                <div className="border-t border-slate-800 pt-4 text-center md:hidden pb-6">
                     <p className="font-ui text-sm text-slate-500 mb-1">SYSTEM MESSAGE:</p>
                     <p className="font-term text-green-500 pulse-text">
                         [ CLOSE THIS WINDOW TO ACCESS DESKTOP ICONS ]
@@ -418,17 +404,14 @@
             <div className="h-full bg-slate-950 text-slate-300 p-8 flex flex-col items-center justify-center text-center font-ui">
                 <h2 className="text-2xl font-bold mb-6 border-b border-amber-600 pb-2 text-amber-500 bloom-amber tracking-widest">ACQUISITION CHANNELS</h2>
                 <div className="w-full space-y-4">
-                    {/* UPDATED: Patreon Link */}
                     <a href="https://www.patreon.com/cw/LilyRosslyn" target="_blank" className="block w-full border border-amber-500 p-4 bg-amber-900/10 hover:bg-amber-900/30 text-lg text-amber-400 font-bold transition-all bloom-amber">
                         [ JOIN THE ARCHIVE (PATREON) ]
                     </a>
                     
-                    {/* UPDATED: Fourthwall Link */}
                     <a href="https://shop.lilyrosslyn.com" target="_blank" className="block w-full border border-blue-500 p-4 bg-blue-900/10 hover:bg-blue-900/30 text-lg text-blue-400 font-bold transition-all bloom-blue">
                         [ REQUISITION SUPPLIES (MERCH) ]
                     </a>
                     
-                    {/* Flavor Text / Offline Links */}
                     <div className="block w-full border border-slate-700 p-3 text-slate-600 text-lg cursor-not-allowed bg-slate-900">
                         [ AMAZON TERMINAL (OFFLINE) ]
                     </div>
@@ -445,7 +428,8 @@
 
             useEffect(() => {
                 const isMobile = window.innerWidth < 640;
-                setWindows(prev => prev.map(w => ({ ...w, position: isMobile ? { x: 5, y: 5 } : w.position })));
+                // UPDATED: Use Percentage Centering for Mobile too, so it floats in the middle
+                setWindows(prev => prev.map(w => ({ ...w, position: isMobile ? { x: '50%', y: '50%' } : w.position })));
             }, []);
 
             const openWindow = (id, title, contentComponent = null) => {
@@ -466,7 +450,7 @@
                     }
                     const isMobile = window.innerWidth < 640;
                     const offset = prev.length * 20;
-                    return [...prev, { id, title, isOpen: true, isMinimized: false, zIndex: nextZIndex, position: isMobile ? { x: 5, y: 5 } : { x: 50 + offset, y: 50 + offset }, content }];
+                    return [...prev, { id, title, isOpen: true, isMinimized: false, zIndex: nextZIndex, position: isMobile ? { x: '50%', y: '50%' } : { x: 50 + offset, y: 50 + offset }, content }];
                 });
                 setActiveWindowId(id);
                 setNextZIndex(prev => prev + 1);
@@ -503,7 +487,6 @@
                         
                         <div className="col-span-3 md:col-span-1 h-px bg-slate-800 w-full md:w-16 mx-auto my-2"></div>
                         
-                        {/* UPDATED: Log Out points to Main Site */}
                         <DesktopIcon label="LOG_OUT" icon={Icons.User} externalLink="https://lilyrosslyn.com" colorClass="text-slate-500" />
                     </div>
 
@@ -529,7 +512,6 @@
                             <div className="p-1 flex flex-col gap-1">
                                 <button onClick={() => window.location.href='console.html'} className="p-2 text-left text-green-500 hover:bg-slate-800 font-ui text-sm flex items-center gap-2 transition-colors bloom-green"><Icons.Terminal /> SYSTEM BACKDOOR</button>
                                 <div className="h-px bg-slate-800 my-1"></div>
-                                {/* UPDATED: Emergency Shutdown points to Main Site */}
                                 <button onClick={() => window.location.href='https://lilyrosslyn.com'} className="p-2 text-left text-red-400 hover:bg-slate-800 font-ui text-sm flex items-center gap-2 transition-colors bloom-red"><span className="font-bold">⚠</span> EMERGENCY SHUTDOWN</button>
                             </div>
                         </div>
